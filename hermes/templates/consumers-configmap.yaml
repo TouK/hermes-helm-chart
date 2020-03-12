@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "hermes.consumers.fullname" . }}
+  labels:
+    {{- include "hermes.consumers.labels" . | nindent 4 }}
+data:
+  consumers.properties: |-
+    zookeeper.connect.string=master-zookeeper.nk-cloud-1251-master.k8s-carpinion.touk.pl:2181
+    zookeeper.root=/hermes
+    zookeeper.connection.timeout=5000
+    zookeeper.session.timeout=7000
+
+    kafka.broker.list=master-kafka.nk-cloud-1251-master.k8s-carpinion.touk.pl:9092
+    kafka.zookeeper.connect.string=master-zookeeper.nk-cloud-1251-master.k8s-carpinion.touk.pl:2181
+
+    metrics.graphite.reporter=false
+
+    consumer.workload.consumers.per.subscription=1
+
+
+  
+  

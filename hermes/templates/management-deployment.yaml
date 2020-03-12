@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "hermes.management.fullname" . }}
+  labels:
+    {{- include "hermes.management.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.management.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "hermes.management.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/management-configmap.yaml") . | sha256sum }}
+      labels:
+        {{- include "hermes.management.selectorLabels" . | nindent 8 }}
+    spec:
+    {{- with .Values.management.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      serviceAccountName: {{ include "hermes.management.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.management.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ template "hermes.name" . }}-{{ .Values.management.name }}
+          securityContext:
+            {{- toYaml .Values.management.securityContext | nindent 12 }}
+          image: "{{ .Values.management.image.repository }}:{{ .Values.management.image.tag }}"
+          imagePullPolicy: {{ .Values.management.image.pullPolicy }}
+          volumeMounts:
+            - name: config
+              mountPath: /etc/management
+          env:
+            - name: SPRING_CONFIG_ADDITIONAL_LOCATION
+              value: /etc/management/management.yaml
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          resources:
+            {{- toYaml .Values.management.resources | nindent 12 }}
+      volumes:
+        - name: config
+          configMap:
+            name: {{ include "hermes.management.fullname" . }}
+      {{- with .Values.management.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.management.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.management.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}

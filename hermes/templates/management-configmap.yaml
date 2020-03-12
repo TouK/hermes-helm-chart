@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "hermes.management.fullname" . }}
+  labels:
+    {{- include "hermes.management.labels" . | nindent 4 }}
+data:
+  management.yaml: |-
+    server:
+    port: 7777
+
+    application:
+      name: hermes-management
+
+
+    kafka:
+      clusters:
+        -
+          datacenter: dc
+          clusterName: primary
+          connectionString: master-zookeeper.nk-cloud-1251-master.k8s-carpinion.touk.pl:2181
+          connectionTimeout: 3000
+          bootstrapKafkaServer: master-kafka.nk-cloud-1251-master.k8s-carpinion.touk.pl:9092
+    
+    storage:
+      clusters:
+        -
+          datacenter: dc
+          clusterName: zk
+          connectionString: master-zookeeper.nk-cloud-1251-master.k8s-carpinion.touk.pl:2181
+
+    topic:
+      replicationFactor: 1
+
+    metrics:
+      graphite:
+        host: graphite
+      graphiteHttpUri: http://localhost:80
+      enabled: false
+  
+  

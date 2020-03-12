@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "hermes.consumers.fullname" . }}
+  labels:
+    {{- include "hermes.consumers.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.consumers.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "hermes.consumers.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/consumers-configmap.yaml") . | sha256sum }}
+      labels:
+        {{- include "hermes.consumers.selectorLabels" . | nindent 8 }}
+    spec:
+    {{- with .Values.consumers.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      serviceAccountName: {{ include "hermes.consumers.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.consumers.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ template "hermes.name" . }}-{{ .Values.consumers.name }}
+          securityContext:
+            {{- toYaml .Values.consumers.securityContext | nindent 12 }}
+          image: "{{ .Values.consumers.image.repository }}:{{ .Values.consumers.image.tag }}"
+          imagePullPolicy: {{ .Values.consumers.image.pullPolicy }}
+          volumeMounts:
+            - name: config
+              mountPath: /etc/consumers
+          env:
+            - name: HERMES_CONSUMERS_OPTS
+              value: "-Darchaius.configurationSource.additionalUrls=file:///etc/consumers/consumers.properties"
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          resources:
+            {{- toYaml .Values.consumers.resources | nindent 12 }}
+      volumes:
+        - name: config
+          configMap:
+            name: {{ include "hermes.consumers.fullname" . }}
+      {{- with .Values.management.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.consumers.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.consumers.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}

@@ -1,0 +1,33 @@
+{{- if .Values.management.ingress.enabled -}}
+{{- $fullName := include "hermes.management.fullname" . -}}
+{{- $svcPort := .Values.management.service.port -}}
+{{- $tlsSecretName := default (printf "%s-tls" $fullName) .Values.management.ingress.tlsSecretName -}}
+{{- $fqdn := printf "%s.%s" (default $fullName .Values.management.ingress.host) .Values.management.ingress.domain -}}
+{{- if semverCompare ">=1.14-0" .Capabilities.KubeVersion.GitVersion -}}
+apiVersion: networking.k8s.io/v1beta1
+{{- else -}}
+apiVersion: extensions/v1beta1
+{{- end }}
+kind: Ingress
+metadata:
+  name: {{ $fullName }}
+  labels:
+    {{- include "hermes.management.labels" . | nindent 4 }}
+  {{- with .Values.management.ingress.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  tls:
+    - secretName: {{ $tlsSecretName }}
+      hosts:
+        - {{ $fqdn | quote }}
+  rules:
+    - host: {{ $fqdn | quote }}
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: {{ $fullName }}
+              servicePort: {{ $svcPort }}
+{{- end }}
