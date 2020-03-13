@@ -39,7 +39,7 @@ spec:
             {{- end }}
           env:
             - name: HERMES_CONSUMERS_OPTS
-              value: "-Darchaius.configurationSource.additionalUrls=file:///etc/consumers/consumers.properties"
+              value: "-Darchaius.configurationSource.additionalUrls=file:///etc/consumers/consumers.properties -Dlogback.configurationFile=/etc/consumers/logback.xml"
           ports:
             - name: http
               containerPort: 8080

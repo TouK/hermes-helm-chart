@@ -17,6 +17,33 @@ data:
     metrics.graphite.reporter=false
 
     consumer.workload.consumers.per.subscription=1
+  logback.xml: |-
+    <?xml version="1.0" encoding="UTF-8"?>
+    <configuration>
+
+        <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+            <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+                <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %logger{36} - %msg%n</Pattern>
+            </encoder>
+        </appender>
+
+        <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <file>/opt/consumers/hermes-consumers.log</file>
+            <encoder>
+                <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %logger{36} - %msg%n</Pattern>
+            </encoder>
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <maxHistory>1</maxHistory>
+                <fileNamePattern>hermes-consumers-%d{yyyy-MM-dd}.log</fileNamePattern>
+            </rollingPolicy>
+        </appender>
+
+        <logger 
+
+    </configuration>ender-ref ref="FILE" />
+        </root>
+
+    </configuration>
 
 
   
