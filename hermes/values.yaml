@@ -153,6 +153,13 @@ consumers:
     # readOnlyRootFilesystem: true
     # runAsNonRoot: true
     runAsUser: 1000
+  
+  persistence:
+    enabled: true
+    subPath: ""
+    accessMode: ReadWriteOnce
+    size: 16Gi
+    annotations: {}
 
   ingress:
     enabled: false
