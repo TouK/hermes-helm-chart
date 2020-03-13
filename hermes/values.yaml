@@ -40,7 +40,7 @@ management:
 
   service:
     type: ClusterIP
-    port: 8082
+    port: 8080
 
   ingress:
     enabled: true
@@ -98,7 +98,7 @@ frontend:
 
   service:
     type: ClusterIP
-    port: 8090
+    port: 8080
 
   ingress:
     enabled: true
