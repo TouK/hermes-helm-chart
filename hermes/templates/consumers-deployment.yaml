@@ -58,7 +58,14 @@ spec:
         - name: config
           configMap:
             name: {{ include "hermes.consumers.fullname" . }}
-      {{- with .Values.management.nodeSelector }}
+        - name: storage
+        {{- if .Values.consumers.persistence.enabled }}
+          persistentVolumeClaim:
+            claimName: {{ .Values.consumers.persistence.existingClaim | default (include "hermes.consumers.fullname" .) }}
+        {{- else }}
+          emptyDir: {}
+        {{- end }}
+      {{- with .Values.consumers.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
