@@ -49,18 +49,18 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end -}}
 
 {{- define "hermes.management.selectorLabels" -}}
-app.kubernetes.io/name: {{ .Values.management.name }}
 {{ include "hermes.common.selectorLabels" . }}
+app.kubernetes.io/name: {{ .Values.management.name }}
 {{- end -}}
 
 {{- define "hermes.frontend.selectorLabels" -}}
-app.kubernetes.io/name: {{ .Values.frontend.name }}
 {{ include "hermes.common.selectorLabels" . }}
+app.kubernetes.io/name: {{ .Values.frontend.name }}
 {{- end -}}
 
 {{- define "hermes.consumers.selectorLabels" -}}
-app.kubernetes.io/name: {{ .Values.consumers.name }}
 {{ include "hermes.common.selectorLabels" . }}
+app.kubernetes.io/name: {{ .Values.consumers.name }}
 {{- end -}}
 
 {{/*
