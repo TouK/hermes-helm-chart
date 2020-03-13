@@ -40,7 +40,7 @@ management:
 
   service:
     type: ClusterIP
-    port: 8080
+    port: 8082
 
   ingress:
     enabled: true
@@ -98,7 +98,7 @@ frontend:
 
   service:
     type: ClusterIP
-    port: 8080
+    port: 8090
 
   ingress:
     enabled: true
@@ -153,10 +153,6 @@ consumers:
     # readOnlyRootFilesystem: true
     # runAsNonRoot: true
     runAsUser: 1000
-
-  service:
-    type: ClusterIP
-    port: 80
 
   ingress:
     enabled: false
