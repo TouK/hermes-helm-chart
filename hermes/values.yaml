@@ -158,7 +158,7 @@ consumers:
     enabled: true
     subPath: ""
     accessMode: ReadWriteOnce
-    size: 16Gi
+    size: 8Gi
     annotations: {}
 
   ingress:
