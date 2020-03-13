@@ -38,9 +38,12 @@ data:
             </rollingPolicy>
         </appender>
 
-        <logger 
+        <logger name="org.apache.zookeeper" level="ERROR" />
+        <logger name="kafka" level="WARN"/>
 
-    </configuration>ender-ref ref="FILE" />
+        <root level="INFO">
+            <appender-ref ref="STDOUT" />
+            <appender-ref ref="FILE" />
         </root>
 
     </configuration>
