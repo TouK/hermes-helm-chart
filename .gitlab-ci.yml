@@ -1,0 +1,8 @@
+deploy:
+  image: docker-gitlab.touk.pl/carpinion/ci/k8s-tools
+  environment:
+    name: $CI_COMMIT_REF_NAME # it means branch or tag name
+    url: https://${CI_ENVIRONMENT_SLUG}-nussknacker.carpinion.touk.pl
+  script:
+    - helm3 repo add stable https://kubernetes-charts.storage.googleapis.com/
+    - helm3 upgrade -i --devel "$CI_ENVIRONMENT_SLUG" hermes
