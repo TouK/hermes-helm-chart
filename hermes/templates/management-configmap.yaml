@@ -7,7 +7,7 @@ metadata:
 data:
   management.yaml: |-
     server:
-    port: 7777
+      port: 8080
 
     application:
       name: hermes-management
