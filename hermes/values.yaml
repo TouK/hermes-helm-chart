@@ -5,6 +5,9 @@
 nameOverride: ""
 fullnameOverride: ""
 
+imagePullSecrets:
+  - name: "gitlab-registry"
+
 management:
   name: "management"
   replicaCount: 1
@@ -14,7 +17,6 @@ management:
     tag: latest
     pullPolicy: IfNotPresent
 
-  imagePullSecrets: []
   nameOverride: ""
   fullnameOverride: ""
 
@@ -73,7 +75,6 @@ frontend:
     tag: latest
     pullPolicy: IfNotPresent
 
-  imagePullSecrets: []
   nameOverride: ""
   fullnameOverride: ""
 
@@ -132,7 +133,6 @@ consumers:
     tag: latest
     pullPolicy: IfNotPresent
 
-  imagePullSecrets: []
   nameOverride: ""
   fullnameOverride: ""
 

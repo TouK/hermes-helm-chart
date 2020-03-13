@@ -16,7 +16,7 @@ spec:
       labels:
         {{- include "hermes.consumers.selectorLabels" . | nindent 8 }}
     spec:
-    {{- with .Values.consumers.imagePullSecrets }}
+    {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
     {{- end }}
