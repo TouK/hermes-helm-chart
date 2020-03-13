@@ -40,18 +40,6 @@ spec:
           env:
             - name: HERMES_CONSUMERS_OPTS
               value: "-Darchaius.configurationSource.additionalUrls=file:///etc/consumers/consumers.properties -Dlogback.configurationFile=file:///etc/consumers/logback.xml"
-          ports:
-            - name: http
-              containerPort: 8080
-              protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /
-              port: http
-          readinessProbe:
-            httpGet:
-              path: /
-              port: http
           resources:
             {{- toYaml .Values.consumers.resources | nindent 12 }}
       volumes:
