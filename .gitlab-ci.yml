@@ -1,8 +1,18 @@
-deploy:
+stages:
+  - build
+  - publish
+
+default:
   image: docker-gitlab.touk.pl/carpinion/ci/k8s-tools
-  environment:
-    name: $CI_COMMIT_REF_NAME # it means branch or tag name
-    url: https://${CI_ENVIRONMENT_SLUG}-nussknacker.carpinion.touk.pl
+  before_script:
+    - export VERSION=`helm3 show chart nussknacker | grep ^version | sed -e "s/.*:\ //;s/SNAPSHOT/SNAPSHOT.${CI_PIPELINE_IID}/"
+
+build:
+  stage: build
+  artifacts:
+    expire_in: 1d
+    paths:
+      - ./dist/
   script:
     - |
       kubectl create secret -n "$KUBE_NAMESPACE" docker-registry gitlab-registry \
@@ -12,4 +22,12 @@ deploy:
         --docker-email="$GITLAB_USER_EMAIL" \
         -o yaml --dry-run | kubectl replace -n "$KUBE_NAMESPACE" --force -f -
     - helm3 repo add stable https://kubernetes-charts.storage.googleapis.com/
-    - helm3 upgrade -i --devel "$CI_ENVIRONMENT_SLUG" hermes
+    - helm3 repo add incubator https://kubernetes-charts-incubator.storage.googleapis.com/
+    - helm3 repo add riskfocus https://riskfocus.github.io/helm-charts-public/
+    - helm3 dependencies build hermes
+    - helm3 package hermes -d dist --version $VERSION
+
+publish:
+  stage: publish
+  script:
+    - curl -u publisher:MzQwMjY0NTk4ZDc0 --fail --data-binary "@dist/hermes-$VERSION.tgz" https://chartmuseum.carpinion.touk.pl/public/api/charts
