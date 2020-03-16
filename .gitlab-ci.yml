@@ -5,7 +5,7 @@ stages:
 default:
   image: docker-gitlab.touk.pl/carpinion/ci/k8s-tools
   before_script:
-    - export VERSION=`helm3 show chart hermes | grep ^version | sed -e "s/.*:\ //;s/SNAPSHOT/SNAPSHOT.${CI_PIPELINE_IID}/"
+    - export VERSION=`helm3 show chart hermes | grep ^version | sed -e "s/.*:\ //;s/SNAPSHOT/SNAPSHOT.${CI_PIPELINE_IID}/"`
 
 build:
   stage: build
