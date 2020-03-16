@@ -14,13 +14,13 @@ build:
     paths:
       - ./dist/
   script:
-    - |
-      kubectl create secret -n "$KUBE_NAMESPACE" docker-registry gitlab-registry \
-        --docker-server="$CI_REGISTRY" \
-        --docker-username="${CI_DEPLOY_USER:-$CI_REGISTRY_USER}" \
-        --docker-password="${CI_DEPLOY_PASSWORD:-$CI_REGISTRY_PASSWORD}" \
-        --docker-email="$GITLAB_USER_EMAIL" \
-        -o yaml --dry-run | kubectl replace -n "$KUBE_NAMESPACE" --force -f -
+    # - |
+    #   kubectl create secret -n "$KUBE_NAMESPACE" docker-registry gitlab-registry \
+    #     --docker-server="$CI_REGISTRY" \
+    #     --docker-username="${CI_DEPLOY_USER:-$CI_REGISTRY_USER}" \
+    #     --docker-password="${CI_DEPLOY_PASSWORD:-$CI_REGISTRY_PASSWORD}" \
+    #     --docker-email="$GITLAB_USER_EMAIL" \
+    #     -o yaml --dry-run | kubectl replace -n "$KUBE_NAMESPACE" --force -f -
     - helm3 repo add stable https://kubernetes-charts.storage.googleapis.com/
     - helm3 repo add incubator https://kubernetes-charts-incubator.storage.googleapis.com/
     - helm3 repo add riskfocus https://riskfocus.github.io/helm-charts-public/
