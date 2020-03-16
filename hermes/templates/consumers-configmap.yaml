@@ -6,13 +6,13 @@ metadata:
     {{- include "hermes.consumers.labels" . | nindent 4 }}
 data:
   consumers.properties: |-
-    zookeeper.connect.string=master-zookeeper.nk-cloud-1251-master.k8s-carpinion.touk.pl:2181
+    zookeeper.connect.string={{ include "hermes.zkUrl" . }}
     zookeeper.root=/hermes
     zookeeper.connection.timeout=5000
     zookeeper.session.timeout=7000
 
-    kafka.broker.list=master-kafka.nk-cloud-1251-master.k8s-carpinion.touk.pl:9092
-    kafka.zookeeper.connect.string=master-zookeeper.nk-cloud-1251-master.k8s-carpinion.touk.pl:2181
+    kafka.broker.list={{ include "hermes.kafkaUrl" . }}
+    kafka.zookeeper.connect.string={{ include "hermes.zkUrl" . }}
 
     metrics.graphite.reporter=false
 

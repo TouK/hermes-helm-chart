@@ -10,5 +10,6 @@ deploy:
         --docker-password="${CI_DEPLOY_PASSWORD:-$CI_REGISTRY_PASSWORD}" \
         --docker-email="$GITLAB_USER_EMAIL" \
         -o yaml --dry-run | kubectl replace -n "$KUBE_NAMESPACE" --force -f -
-    - helm3 repo add stable https://kubernetes-charts.storage.googleapis.com/
-    - helm3 upgrade -i --devel "$CI_ENVIRONMENT_SLUG" hermes
+    - helm3 repo add incubator https://kubernetes-charts-incubator.storage.googleapis.com/
+    - helm3 dependencies build hermes
+    - helm3 upgrade -i --devel "$CI_ENVIRONMENT_SLUG" --set kafka.enabled=true hermes
