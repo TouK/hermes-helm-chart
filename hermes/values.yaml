@@ -183,6 +183,6 @@ consumers:
   affinity: {}
 
   kafka:
-    enabled: true
+    enabled: false
     url: ""
     zookeeperUrl: ""

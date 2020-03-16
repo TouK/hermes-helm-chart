@@ -12,4 +12,4 @@ deploy:
         -o yaml --dry-run | kubectl replace -n "$KUBE_NAMESPACE" --force -f -
     - helm3 repo add incubator https://kubernetes-charts-incubator.storage.googleapis.com/
     - helm3 dependencies build hermes
-    - helm3 upgrade -i --devel "$CI_ENVIRONMENT_SLUG" --set kafka.enabled=true hermes
+    - helm3 upgrade -i --devel "$CI_ENVIRONMENT_SLUG" --set kafka.url="master-kafka.nk-cloud-1251-master.k8s-carpinion.touk.pl:9092",kafka.zookeeperUrl="master-zookeeper.nk-cloud-1251-master.k8s-carpinion.touk.pl:2181" hermes
