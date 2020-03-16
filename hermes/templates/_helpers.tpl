@@ -184,7 +184,7 @@ Define zookeper URL based on user provided values
 */}}
 {{- define "hermes.zkUrl" -}}
 {{- if .Values.kafka.enabled -}}
-    {{ .Release.Name }}-zookeper.{{ .Release.Namespace }}.svc.cluster.local:2181
+    {{ .Release.Name }}-zookeeper.{{ .Release.Namespace }}.svc.cluster.local:2181
 {{- else -}}
     {{ required "Enable kafka or provide a valid .Values.kafka.zookeeperUrl entry!" .Values.kafka.zookeeperUrl }}
 {{- end -}}
