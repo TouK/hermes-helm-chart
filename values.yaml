@@ -1,0 +1,8 @@
+kafka:
+  enabled: true
+management:
+  ingress:
+    enabled: false
+frontend:
+  ingress:
+    enabled: false

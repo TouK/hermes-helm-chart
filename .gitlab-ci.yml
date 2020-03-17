@@ -33,7 +33,7 @@ deploy:
   environment:
     name: $CI_COMMIT_REF_NAME
   script:
-    - helm3 repo add incubator https://kubernetes-charts-incubator.storage.googleapis.com/
+    - helm3 repo add touk https://chartmuseum.carpinion.touk.pl/public/
     - |
       kubectl create secret -n "$KUBE_NAMESPACE" docker-registry gitlab-registry \
         --docker-server="$CI_REGISTRY" \
@@ -41,5 +41,4 @@ deploy:
         --docker-password="${CI_DEPLOY_PASSWORD:-$CI_REGISTRY_PASSWORD}" \
         --docker-email="$GITLAB_USER_EMAIL" \
         -o yaml --dry-run | kubectl replace -n "$KUBE_NAMESPACE" --force -f -
-    - helm3 dependencies build hermes
-    - helm3 upgrade -i --devel "$CI_ENVIRONMENT_SLUG" --set kafka.enabled=true,management.ingress.enabled=false,frontend.ingress.enabled=false hermes
+    - helm3 upgrade -i --devel "$CI_ENVIRONMENT_SLUG"  -f values.yaml touk/hermes
