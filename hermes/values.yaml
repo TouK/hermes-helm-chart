@@ -189,7 +189,7 @@ consumers:
 
   affinity: {}
 
-  kafka:
-    enabled: false
-    url: ""
-    zookeeperUrl: ""
+kafka:
+  enabled: false
+  url: ""
+  zookeeperUrl: ""
