@@ -32,6 +32,11 @@ spec:
           volumeMounts:
             - name: config
               mountPath: /etc/frontend
+            {{- if .Values.frontend.persistence.enabled }}
+            - name: storage
+              mountPath: /opt/frontend/storage
+              subPath: {{ .Values.frontend.persistence.subPath }}
+            {{- end }}
           env:
             - name: HERMES_FRONTEND_OPTS
               value: "-Darchaius.configurationSource.additionalUrls=file:///etc/frontend/frontend.properties -Dfrontend.port={{ .Values.frontend.service.port }}"
@@ -53,6 +58,13 @@ spec:
         - name: config
           configMap:
             name: {{ include "hermes.frontend.fullname" . }}
+        - name: storage
+        {{- if .Values.frontend.persistence.enabled }}
+          persistentVolumeClaim:
+            claimName: {{ .Values.frontend.persistence.existingClaim | default (include "hermes.frontend.fullname" .) }}
+        {{- else }}
+          emptyDir: {}
+        {{- end }}
       {{- with .Values.management.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
