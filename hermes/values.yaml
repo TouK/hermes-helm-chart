@@ -97,13 +97,6 @@ frontend:
     type: ClusterIP
     port: 8080
 
-  persistence:
-    enabled: true
-    subPath: ""
-    accessMode: ReadWriteOnce
-    size: 1Gi
-    annotations: {}
-
   ingress:
     enabled: true
     annotations: 
@@ -157,13 +150,6 @@ consumers:
     # readOnlyRootFilesystem: true
     # runAsNonRoot: true
     runAsUser: 1000
-  
-  persistence:
-    enabled: true
-    subPath: ""
-    accessMode: ReadWriteOnce
-    size: 1Gi
-    annotations: {}
 
   ingress:
     enabled: false

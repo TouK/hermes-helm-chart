@@ -32,11 +32,8 @@ spec:
           volumeMounts:
             - name: config
               mountPath: /etc/consumers
-            {{- if .Values.consumers.persistence.enabled }}
             - name: storage
               mountPath: /opt/consumers/storage
-              subPath: {{ .Values.consumers.persistence.subPath }}
-            {{- end }}
           env:
             - name: HERMES_CONSUMERS_OPTS
               value: "-Darchaius.configurationSource.additionalUrls=file:///etc/consumers/consumers.properties -Dlogback.configurationFile=file:///etc/consumers/logback.xml"
@@ -59,12 +56,8 @@ spec:
           configMap:
             name: {{ include "hermes.consumers.fullname" . }}
         - name: storage
-        {{- if .Values.consumers.persistence.enabled }}
-          persistentVolumeClaim:
-            claimName: {{ .Values.consumers.persistence.existingClaim | default (include "hermes.consumers.fullname" .) }}
-        {{- else }}
-          emptyDir: {}
-        {{- end }}
+          hostPath:
+            path: "/opt/consumers/storage"
       {{- with .Values.consumers.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
