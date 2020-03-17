@@ -5,15 +5,12 @@
 nameOverride: ""
 fullnameOverride: ""
 
-imagePullSecrets:
-  - name: "gitlab-registry"
-
 management:
   name: "management"
   replicaCount: 1
 
   image:
-    repository: docker-gitlab.touk.pl/carpinion/nussknacker/hermes-docker/management
+    repository: touk/hermes-management
     tag: latest
     pullPolicy: IfNotPresent
 
@@ -71,7 +68,7 @@ frontend:
   replicaCount: 1
 
   image:
-    repository: docker-gitlab.touk.pl/carpinion/nussknacker/hermes-docker/frontend
+    repository: touk/hermes-frontend
     tag: latest
     pullPolicy: IfNotPresent
 
@@ -136,7 +133,7 @@ consumers:
   replicaCount: 1
 
   image:
-    repository: docker-gitlab.touk.pl/carpinion/nussknacker/hermes-docker/consumers
+    repository: touk/hermes-consumers
     tag: latest
     pullPolicy: IfNotPresent
 
