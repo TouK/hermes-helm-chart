@@ -21,11 +21,15 @@ build:
 
 publish:
   stage: publish
+  only:
+    - master
   script:
     - curl -u publisher:MzQwMjY0NTk4ZDc0 --fail --data-binary "@dist/hermes-$VERSION.tgz" https://chartmuseum.carpinion.touk.pl/public/api/charts
 
 deploy:
   stage: deploy
+  only:
+    - master
   environment:
     name: $CI_COMMIT_REF_NAME
   script:
