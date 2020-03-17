@@ -104,7 +104,7 @@ frontend:
     enabled: true
     subPath: ""
     accessMode: ReadWriteOnce
-    size: 2Gi
+    size: 1Gi
     annotations: {}
 
   ingress:
@@ -165,7 +165,7 @@ consumers:
     enabled: true
     subPath: ""
     accessMode: ReadWriteOnce
-    size: 2Gi
+    size: 1Gi
     annotations: {}
 
   ingress:
