@@ -1,0 +1,27 @@
+
+{{- if and .Values.frontend.persistence.enabled (not .Values.frontend.persistence.existingClaim) }}
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ template "hermes.frontend.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+{{- with .Values.frontend.persistence.annotations  }}
+  annotations:
+{{ toYaml . | indent 4 }}
+{{- end }}
+  labels:
+    {{- include "hermes.frontend.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    - {{ .Values.frontend.persistence.accessMode | quote }}
+  resources:
+    requests:
+      storage: {{ .Values.frontend.persistence.size | quote }}
+{{- if .Values.frontend.persistence.storageClass }}
+{{- if (eq "-" .Values.frontend.persistence.storageClass) }}
+  storageClassName: ""
+{{- else }}
+  storageClassName: "{{ .Values.frontend.persistence.storageClass }}"
+{{- end }}
+{{- end }}
+{{- end }}
