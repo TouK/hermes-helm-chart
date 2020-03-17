@@ -30,7 +30,6 @@ deploy:
     name: $CI_COMMIT_REF_NAME
   script:
     - helm3 repo add incubator https://kubernetes-charts-incubator.storage.googleapis.com/
-    - helm3 repo add touk https://chartmuseum.carpinion.touk.pl/public/
     - |
       kubectl create secret -n "$KUBE_NAMESPACE" docker-registry gitlab-registry \
         --docker-server="$CI_REGISTRY" \
