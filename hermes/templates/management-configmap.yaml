@@ -18,7 +18,7 @@ data:
         -
           datacenter: dc
           clusterName: primary
-          connectionString: {{ include "hermes.zkUrl" . }}
+          connectionString: {{ include "hermes.zookeeperUrl" . }}
           connectionTimeout: 3000
           bootstrapKafkaServer: {{ include "hermes.kafkaUrl" . }}
     
@@ -27,7 +27,7 @@ data:
         -
           datacenter: dc
           clusterName: zk
-          connectionString: {{ include "hermes.zkUrl" . }}
+          connectionString: {{ include "hermes.zookeeperUrl" . }}
 
     topic:
       replicationFactor: 1
@@ -37,5 +37,4 @@ data:
         host: graphite
       graphiteHttpUri: http://localhost:80
       enabled: false
-  
   

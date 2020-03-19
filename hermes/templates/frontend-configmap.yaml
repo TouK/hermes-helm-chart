@@ -6,11 +6,11 @@ metadata:
     {{- include "hermes.frontend.labels" . | nindent 4 }}
 data:
   frontend.properties: |-
-    zookeeper.connect.string={{ include "hermes.zkUrl" . }}
+    zookeeper.connect.string={{ include "hermes.zookeeperUrl" . }}
     zookeeper.root=/hermes
 
     kafka.broker.list={{ include "hermes.kafkaUrl" . }}
-    kafka.zookeeper.connect.string={{ include "hermes.zkUrl" . }}
+    kafka.zookeeper.connect.string={{ include "hermes.zookeeperUrl" . }}
 
     kafka.topic.partitions=4
     kafka.topic.replication.factor=1
@@ -51,5 +51,4 @@ data:
 
     </configuration>
 
-  
   

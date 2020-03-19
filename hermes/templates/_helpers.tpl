@@ -182,10 +182,10 @@ Define kafka URL based on user provided values
 {{/*
 Define zookeper URL based on user provided values
 */}}
-{{- define "hermes.zkUrl" -}}
-{{- if .Values.kafka.enabled -}}
+{{- define "hermes.zookeeperUrl" -}}
+{{- if and .Values.kafka.enabled .Values.kafka.zookeeper.enabled -}}
     {{ .Release.Name }}-zookeeper:2181
 {{- else -}}
-    {{ required "Enable kafka or provide a valid .Values.kafka.zookeeperUrl entry!" .Values.kafka.zookeeperUrl }}
+    {{ required "Enable kafka or provide a valid .Values.kafka.zookeeper.url entry!" .Values.kafka.zookeeper.url }}
 {{- end -}}
 {{- end -}}

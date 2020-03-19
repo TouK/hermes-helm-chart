@@ -6,13 +6,13 @@ metadata:
     {{- include "hermes.consumers.labels" . | nindent 4 }}
 data:
   consumers.properties: |-
-    zookeeper.connect.string={{ include "hermes.zkUrl" . }}
+    zookeeper.connect.string={{ include "hermes.zookeeperUrl" . }}
     zookeeper.root=/hermes
     zookeeper.connection.timeout=5000
     zookeeper.session.timeout=7000
 
     kafka.broker.list={{ include "hermes.kafkaUrl" . }}
-    kafka.zookeeper.connect.string={{ include "hermes.zkUrl" . }}
+    kafka.zookeeper.connect.string={{ include "hermes.zookeeperUrl" . }}
 
     metrics.graphite.reporter=false
 
@@ -49,5 +49,4 @@ data:
     </configuration>
 
 
-  
   
