@@ -6,7 +6,7 @@ stages:
 default:
   image: docker-gitlab.touk.pl/carpinion/ci/k8s-tools
   before_script:
-    - export VERSION=`helm3 show chart hermes | grep ^version | sed -e "s/.*:\ //;s/SNAPSHOT/SNAPSHOT.${CI_PIPELINE_IID}/"`
+    - export VERSION=`helm show chart hermes | grep ^version | sed -e "s/.*:\ //;s/SNAPSHOT/SNAPSHOT.${CI_PIPELINE_IID}/"`
 
 build:
   stage: build
@@ -15,9 +15,9 @@ build:
     paths:
       - ./dist/
   script:
-    - helm3 repo add incubator https://kubernetes-charts-incubator.storage.googleapis.com/
-    - helm3 dependencies build hermes
-    - helm3 package hermes -d dist --version $VERSION
+    - helm repo add incubator https://kubernetes-charts-incubator.storage.googleapis.com/
+    - helm dependencies build hermes
+    - helm package hermes -d dist --version $VERSION
 
 publish:
   stage: publish
@@ -33,5 +33,5 @@ deploy:
   environment:
     name: $CI_COMMIT_REF_NAME
   script:
-    - helm3 repo add touk https://chartmuseum.carpinion.touk.pl/public/
-    - helm3 upgrade -i --devel "$CI_ENVIRONMENT_SLUG"  -f values.yaml touk/hermes
+    - helm repo add touk https://chartmuseum.carpinion.touk.pl/public/
+    - helm upgrade -i --devel "$CI_ENVIRONMENT_SLUG"  -f values.yaml touk/hermes
