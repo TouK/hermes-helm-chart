@@ -14,6 +14,8 @@ data:
     kafka.broker.list={{ include "hermes.kafkaUrl" . }}
     kafka.zookeeper.connect.string={{ include "hermes.zookeeperUrl" . }}
 
+    schema.repository.url={{ include "hermes.schemaRegistryUrl" . }}
+
     metrics.graphite.reporter=false
 
     consumer.workload.consumers.per.subscription=1

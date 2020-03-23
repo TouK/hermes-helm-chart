@@ -169,3 +169,17 @@ kafka:
   enabled: false
   url: ""
   zookeeper.url: ""
+
+schemaRegistry:
+  enabled: false
+  kafka:
+    enabled: false
+
+schemaRegistryUi:
+  enabled: false
+  service:
+    type: ClusterIP
+  schemaRegistry:
+    url: http://{{ .Release.Name }}-schema-registry
+    port: 8081
+    proxy: true

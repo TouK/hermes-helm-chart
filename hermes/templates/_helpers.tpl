@@ -186,6 +186,17 @@ Define zookeper URL based on user provided values
 {{- if and .Values.kafka.enabled .Values.kafka.zookeeper.enabled -}}
     {{ .Release.Name }}-zookeeper:2181
 {{- else -}}
-    {{ required "Enable kafka or provide a valid .Values.kafka.zookeeper.url entry!" .Values.kafka.zookeeper.url }}
+    {{ required "Enable zookeeper or provide a valid .Values.kafka.zookeeper.url entry!" .Values.kafka.zookeeper.url }}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Define schema registry URL based on user provided values
+*/}}
+{{- define "hermes.schemaRegistryUrl" -}}
+{{- if .Values.schemaRegistry.enabled -}}
+    http://{{ .Release.Name }}-schema-registry:8081
+{{- else -}}
+    {{ required "Enable schema registry or provide a valid .Values.schemaRegistry.url entry!" .Values.schemaRegistry.url }}
 {{- end -}}
 {{- end -}}

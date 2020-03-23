@@ -37,4 +37,9 @@ data:
         host: graphite
       graphiteHttpUri: http://localhost:80
       enabled: false
+
+    schema:
+      repository:
+        serverUrl: {{ include "hermes.schemaRegistryUrl" . }}
+
   
