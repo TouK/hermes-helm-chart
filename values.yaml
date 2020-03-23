@@ -6,7 +6,7 @@ management:
 frontend:
   ingress:
     enabled: false
-schema-registry:
+schemaRegistry:
   enabled: true
-schema-registry-ui:
+schemaRegistryUi:
   enabled: true
