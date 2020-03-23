@@ -170,12 +170,12 @@ kafka:
   url: ""
   zookeeper.url: ""
 
-schemaRegistry:
+schema-registry:
   enabled: false
   kafka:
     enabled: false
 
-schemaRegistryUi:
+schema-registry-ui:
   enabled: false
   service:
     type: ClusterIP
