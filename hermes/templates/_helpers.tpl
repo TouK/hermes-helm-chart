@@ -194,7 +194,7 @@ Define zookeper URL based on user provided values
 Define schema registry URL based on user provided values
 */}}
 {{- define "hermes.schemaRegistryUrl" -}}
-{{- if .Values.schema-registry.enabled -}}
+{{- if index .Values "schema-registry" "enabled" -}}
     http://{{ .Release.Name }}-schema-registry:8081
 {{- else -}}
     {{ required "Enable schema-registry or provide a valid .Values.schema-registry.url entry!" .Values.schema-registry.url }}
