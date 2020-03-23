@@ -13,8 +13,8 @@ dependencies:
   - name: schema-registry
     version: ^1.1.9
     repository: "@incubator"
-    condition: schema-registry.enabled
+    condition: schemaRegistry.enabled
   - name: schema-registry-ui
     version: ^0.4.1
     repository: "@stable"
-    condition: schema-registry-ui.enabled
+    condition: schemaRegistryUi.enabled
