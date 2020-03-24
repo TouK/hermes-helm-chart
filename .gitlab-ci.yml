@@ -2,6 +2,7 @@ stages:
   - build
   - publish
   - deploy
+  - clean
 
 default:
   image: docker-gitlab.touk.pl/carpinion/ci/k8s-tools
@@ -22,17 +23,24 @@ build:
 
 publish:
   stage: publish
-  only:
-    - master
   script:
     - curl -u publisher:MzQwMjY0NTk4ZDc0 --fail --data-binary "@dist/hermes-$VERSION.tgz" https://chartmuseum.carpinion.touk.pl/public/api/charts
 
 deploy:
   stage: deploy
-  only:
-    - master
   environment:
     name: $CI_COMMIT_REF_NAME
   script:
     - helm repo add touk https://chartmuseum.carpinion.touk.pl/public/
     - helm upgrade -i --devel "$CI_ENVIRONMENT_SLUG"  -f values.yaml touk/hermes
+
+clean:
+  stage: clean 
+  except:
+    - master
+  when: delayed
+  start_in: 15 minutes
+  environment:
+    name: $CI_COMMIT_REF_NAME
+  script:
+    - helm uninstall "$CI_ENVIRONMENT_SLUG"
