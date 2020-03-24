@@ -21,6 +21,9 @@ data:
           connectionString: {{ include "hermes.zookeeperUrl" . }}
           connectionTimeout: 3000
           bootstrapKafkaServer: {{ include "hermes.kafkaUrl" . }}
+    {{- if .Values.kafka.namespace }}
+          namespace: {{ .Values.kafka.namespace }}
+    {{- end }}
     
     storage:
       clusters:

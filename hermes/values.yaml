@@ -169,6 +169,7 @@ kafka:
   enabled: false
   url: ""
   zookeeper.url: ""
+  namespace: ""
 
 schema-registry:
   enabled: false
