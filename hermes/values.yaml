@@ -174,12 +174,3 @@ schema-registry:
   enabled: false
   kafka:
     enabled: false
-
-schema-registry-ui:
-  enabled: false
-  service:
-    type: ClusterIP
-  schemaRegistry:
-    url: http://{{ .Release.Name }}-schema-registry
-    port: 8081
-    proxy: true

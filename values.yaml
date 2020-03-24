@@ -8,5 +8,3 @@ frontend:
     enabled: false
 schema-registry:
   enabled: true
-schema-registry-ui:
-  enabled: true
