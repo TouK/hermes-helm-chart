@@ -32,7 +32,7 @@ deploy:
     name: $CI_COMMIT_REF_NAME
   script:
     - helm repo add touk https://chartmuseum.carpinion.touk.pl/public/
-    - helm upgrade -i --devel "$CI_ENVIRONMENT_SLUG"  -f values.yaml touk/hermes
+    - helm upgrade -i --devel "$CI_ENVIRONMENT_SLUG" touk/hermes -f values.yaml --version $VERSION
 
 clean:
   stage: clean 
