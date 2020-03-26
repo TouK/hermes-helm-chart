@@ -197,6 +197,6 @@ Define schema registry URL based on user provided values
 {{- if index .Values "schema-registry" "enabled" -}}
     http://{{ .Release.Name }}-schema-registry:8081
 {{- else -}}
-    {{ required "Enable schema-registry or provide a valid .Values.schema-registry.url entry!" index .Values "schema-registry" "url" }}
+    {{ required "Enable schema-registry or provide a valid .Values.schema-registry.url entry!" ( index .Values "schema-registry" "url" ) }}
 {{- end -}}
 {{- end -}}
