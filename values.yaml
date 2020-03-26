@@ -1,5 +1,4 @@
 kafka:
-  enabled: true
   namespace: "hermes"
   replicas: 1
   zookeeper:
@@ -10,5 +9,3 @@ management:
 frontend:
   ingress:
     enabled: false
-schema-registry:
-  enabled: true

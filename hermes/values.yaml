@@ -166,12 +166,12 @@ consumers:
   affinity: {}
 
 kafka:
-  enabled: false
+  enabled: true
   url: ""
   zookeeper.url: ""
   namespace: ""
 
 schema-registry:
-  enabled: false
+  enabled: true
   kafka:
     enabled: false
