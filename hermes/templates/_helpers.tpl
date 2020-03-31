@@ -175,7 +175,7 @@ Define kafka URL based on user provided values
 {{- if .Values.kafka.enabled -}}
     {{ .Release.Name }}-kafka:9092
 {{- else -}}
-    {{ required "Enable kafka or provide a valid .Values.kafka.url entry!" .Values.kafka.url }}
+    {{ required "Enable kafka or provide a valid .Values.kafka.url entry!" ( tpl .Values.kafka.url . ) }}
 {{- end -}}
 {{- end -}}
 
@@ -186,7 +186,7 @@ Define zookeper URL based on user provided values
 {{- if and .Values.kafka.enabled .Values.kafka.zookeeper.enabled -}}
     {{ .Release.Name }}-zookeeper:2181
 {{- else -}}
-    {{ required "Enable zookeeper or provide a valid .Values.kafka.zookeeper.url entry!" .Values.kafka.zookeeper.url }}
+    {{ required "Enable zookeeper or provide a valid .Values.kafka.zookeeper.url entry!" ( tpl .Values.kafka.zookeeper.url . ) }}
 {{- end -}}
 {{- end -}}
 
@@ -197,7 +197,7 @@ Define schema registry URL based on user provided values
 {{- if index .Values "schema-registry" "enabled" -}}
     http://{{ .Release.Name }}-schema-registry:8081
 {{- else -}}
-    {{ required "Enable schema-registry or provide a valid .Values.schema-registry.url entry!" ( index .Values "schema-registry" "url" ) }}
+    {{ required "Enable schema-registry or provide a valid .Values.schema-registry.url entry!" ( tpl ( index .Values "schema-registry" "url" ) . ) }}
 {{- end -}}
 {{- end -}}
 
