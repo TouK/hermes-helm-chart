@@ -200,3 +200,14 @@ Define schema registry URL based on user provided values
     {{ required "Enable schema-registry or provide a valid .Values.schema-registry.url entry!" ( index .Values "schema-registry" "url" ) }}
 {{- end -}}
 {{- end -}}
+
+{{/*
+Define zookeeper storage path based on namespace
+*/}}
+{{- define "hermes.zookeeperRoot" -}}
+{{- if .Values.kafka.namespace -}}
+    /hermes-{{ .Values.kafka.namespace }}
+{{- else -}}
+    /hermes
+{{- end -}}
+{{- end -}}

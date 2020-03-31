@@ -168,7 +168,8 @@ consumers:
 kafka:
   enabled: true
   url: ""
-  zookeeper.url: ""
+  zookeeper:
+    url: ""
   namespace: ""
 
 schema-registry:

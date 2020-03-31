@@ -1,5 +1,5 @@
 kafka:
-  namespace: "hermes"
+  namespace: "ns"
   replicas: 1
   zookeeper:
     replicaCount: 1

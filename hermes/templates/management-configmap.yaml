@@ -14,6 +14,9 @@ data:
 
 
     kafka:
+    {{- if .Values.kafka.namespace }}
+      defaultNamespace: {{ .Values.kafka.namespace }}
+    {{- end }}
       clusters:
         -
           datacenter: dc
@@ -21,11 +24,9 @@ data:
           connectionString: {{ include "hermes.zookeeperUrl" . }}
           connectionTimeout: 3000
           bootstrapKafkaServer: {{ include "hermes.kafkaUrl" . }}
-    {{- if .Values.kafka.namespace }}
-          namespace: {{ .Values.kafka.namespace }}
-    {{- end }}
     
     storage:
+      pathPrefix: {{ include "hermes.zookeeperRoot" . }}
       clusters:
         -
           datacenter: dc

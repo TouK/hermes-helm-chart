@@ -7,7 +7,7 @@ metadata:
 data:
   consumers.properties: |-
     zookeeper.connect.string={{ include "hermes.zookeeperUrl" . }}
-    zookeeper.root=/hermes
+    zookeeper.root={{ include "hermes.zookeeperRoot" . }}
     zookeeper.connection.timeout=5000
     zookeeper.session.timeout=7000
 
