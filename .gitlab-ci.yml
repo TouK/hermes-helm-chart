@@ -28,6 +28,8 @@ publish:
 
 deploy:
   stage: deploy
+  except:
+    - tags
   environment:
     name: $CI_COMMIT_REF_NAME
   script:
@@ -38,6 +40,7 @@ clean:
   stage: clean 
   except:
     - master
+    - tags
   when: delayed
   start_in: 15 minutes
   allow_failure: true
