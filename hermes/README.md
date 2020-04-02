@@ -7,7 +7,7 @@ messages to subscribers REST endpoints. Under the hood, [Apache Kafka](http://ka
 ## TL;DR;
 
 ```console
-$ helm repo add touk https://chartmuseum.carpinion.touk.pl/public/
+$ helm repo add touk https://helm-charts.touk.pl/public/
 $ helm install my-release touk/hermes
 ```
 
