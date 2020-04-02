@@ -22,6 +22,8 @@ build:
     - helm package hermes -d dist --version $VERSION
 
 publish:
+  only:
+    - tags
   stage: publish
   script:
     - curl -u publisher:MzQwMjY0NTk4ZDc0 --fail --data-binary "@dist/hermes-$VERSION.tgz" https://chartmuseum.carpinion.touk.pl/public/api/charts
@@ -33,8 +35,7 @@ deploy:
   environment:
     name: $CI_COMMIT_REF_NAME
   script:
-    - helm repo add touk https://chartmuseum.carpinion.touk.pl/public/
-    - helm upgrade -i --devel "$CI_ENVIRONMENT_SLUG" touk/hermes -f values.yaml --version $VERSION
+    - helm upgrade -i --devel "$CI_ENVIRONMENT_SLUG" ./dist/hermes-$VERSION.tgz -f values.yaml --version $VERSION
 
 clean:
   stage: clean 
