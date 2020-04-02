@@ -1,9 +1,21 @@
 apiVersion: v2
 name: hermes
 description: A Helm chart for Kubernetes
+home: https://hermes.allegro.tech/
+icon: https://hermes.allegro.tech/img/hermes.png
+keywords:
+  - kafka
+  - hermes
+  - allegro
 type: application
 version: 0.1.2-SNAPSHOT
 appVersion: 1.4.3
+sources:
+  - https://github.com/allegro/hermes
+maintainers:
+  - name: TouK
+    email: helm-charts@touk.pl
+    url: https://touk.pl/
 
 dependencies:
   - name: kafka

@@ -50,18 +50,25 @@ incompatible breaking change needing manual actions.
 
 ## Configuration
 
-| Parameter                                 | Description                                                           | Default                                                 |
+| Parameter                                 | Description                                                           | Default
 |-------------------------------------------|-----------------------------------------------------------------------|------------------------
-| `kafka.enabled`                           | If True, installs Kafka chart                                         | `true`                                                  
-| `kafka.url`                               | URL of Kafka cluster (ignored when installing Kafka chart)            | `null` 
-| `kafka.zookeeper.enabled`                 | If True, installs Zookeeper chart along with Kafka                    | `true`                                                  
+| `kafka.enabled`                           | If True, installs Kafka chart                                         | `true`
+| `kafka.url`                               | URL of Kafka cluster (ignored when installing Kafka chart)            | `null`
+| `kafka.zookeeper.enabled`                 | If True, installs Zookeeper chart along with Kafka                    | `true`
 | `kafka.zookeeper.url`                     | URL of Zookeeper cluster (ignored when installing Zookeper chart)     | `null`
 | `kafka.*` `kafka.zookeeper.*`             | Kafka and Zookeeper properties                                        | [See incubator/kafka chart](https://hub.helm.sh/charts/incubator/kafka)
-| `management.ingress.enabled`              |                                                                       | `false` 
-| `management.ingress.annotations`          |                                                                       | `{}`
+| `kafka.namespace`                         | The prefix added to all Kafka topic names managed by Hermes           | `hermes`
+| `management.ingress.enabled`              |                                                                       | `false`
+| `management.ingress.annotations`          | Use this to restrict access to Mangement GUI                          | `{}`
 | `management.ingress.domain`               |                                                                       | `null`
 | `management.ingress.host`                 |                                                                       | `(Release.Name)-(Chart.Name)`
 | `frontend.ingress.enabled`                |                                                                       | `false`
-| `frontend.ingress.annotations`            |                                                                       | `{}`
+| `frontend.ingress.annotations`            | Use this to restrict access to Frontend API                           | `{}`
 | `frontend.ingress.domain`                 |                                                                       | `null`
 | `frontend.ingress.host`                   |                                                                       | `(Release.Name)-(Chart.Name)`
+
+
+## TODO
+
+* There is no Graphite configuration available yet.
+* Since security rules in Hermes require coding they are currently not available for configuration.  
