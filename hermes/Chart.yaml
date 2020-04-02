@@ -1,6 +1,6 @@
 apiVersion: v2
 name: hermes
-description: A Helm chart for Kubernetes
+description: A Helm chart for Kubernetes of Hermes, a reliable and easy to use message broker built on top of Kafka.
 home: https://hermes.allegro.tech/
 icon: https://hermes.allegro.tech/img/hermes.png
 keywords:

@@ -1,6 +1,8 @@
 # Hermes Helm Chart
 
-[Hermes](https://hermes.allegro.tech/) is a reliable and easy to use message broker built on top of Kafka. 
+[Hermes](https://hermes.allegro.tech/) is a message broker that greatly simplifies communication between services
+using publish-subscribe pattern. It is HTTP-native, exposing REST endpoints for message publishing as well as pushing
+messages to subscribers REST endpoints. Under the hood, [Apache Kafka](http://kafka.apache.org/) is used. [(...)](https://hermes-pubsub.readthedocs.io/)
 
 ## TL;DR;
 
