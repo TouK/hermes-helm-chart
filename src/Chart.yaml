@@ -19,7 +19,7 @@ maintainers:
 
 dependencies:
   - name: kafka
-    version: ^0.20.8
+    version: ^0.21.0
     repository: "@incubator"
     condition: kafka.enabled
   - name: schema-registry
