@@ -167,8 +167,12 @@ consumers:
 
 kafka:
   enabled: true
+  persistence:
+    enabled: true
   url: ""
   zookeeper:
+    persistence:
+      enabled: true
     url: ""
   namespace: ""
 
