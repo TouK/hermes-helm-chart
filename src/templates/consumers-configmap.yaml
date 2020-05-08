@@ -17,7 +17,7 @@ data:
     kafka.namespace={{ .Values.kafka.namespace }}
     {{- end }}
 
-    schema.repository.url={{ include "hermes.schemaRegistryUrl" . }}
+    schema.repository.serverUrl={{ include "hermes.schemaRegistryUrl" . }}
 
     metrics.graphite.reporter=false
 

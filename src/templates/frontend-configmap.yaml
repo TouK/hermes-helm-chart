@@ -18,7 +18,7 @@ data:
     kafka.topic.partitions=4
     kafka.topic.replication.factor=1
 
-    schema.repository.url={{ include "hermes.schemaRegistryUrl" . }}
+    schema.repository.serverUrl={{ include "hermes.schemaRegistryUrl" . }}
 
     metrics.graphite.reporter=false
   logback.xml: |-
