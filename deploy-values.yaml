@@ -2,7 +2,7 @@ imagePullSecrets:
   - name: gitlab-registry
 
 kafka:
-  namespace: "ns"
+  namespace: "{{ .Release.Name }}"
   replicas: 1
   zookeeper:
     replicaCount: 1

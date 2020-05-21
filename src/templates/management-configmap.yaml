@@ -15,7 +15,7 @@ data:
 
     kafka:
     {{- if .Values.kafka.namespace }}
-      defaultNamespace: {{ .Values.kafka.namespace }}
+      defaultNamespace: {{ tpl .Values.kafka.namespace . }}
     {{- end }}
       clusters:
         -

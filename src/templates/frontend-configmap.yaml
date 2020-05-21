@@ -12,7 +12,7 @@ data:
     kafka.broker.list={{ include "hermes.kafkaUrl" . }}
     kafka.zookeeper.connect.string={{ include "hermes.zookeeperUrl" . }}
     {{- if .Values.kafka.namespace }}
-    kafka.namespace={{ .Values.kafka.namespace }}
+    kafka.namespace={{ tpl .Values.kafka.namespace . }}
     {{- end }}
 
     kafka.topic.partitions=4
