@@ -1,11 +1,22 @@
+imagePullSecrets:
+  - name: gitlab-registry
+
 kafka:
   namespace: "ns"
   replicas: 1
   zookeeper:
     replicaCount: 1
+
 management:
+  image:
+    pullPolicy: Always
   ingress:
     enabled: false
 frontend:
+  image:
+    pullPolicy: Always
   ingress:
     enabled: false
+consumers:
+  image:
+    pullPolicy: Always

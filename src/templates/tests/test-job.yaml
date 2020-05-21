@@ -1,0 +1,68 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: "{{ include "hermes.fullname" . }}-test-job"
+  annotations:
+    "helm.sh/hook": test
+spec:
+  backoffLimit: 0
+  template:
+    spec:
+    {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+      {{- toYaml . | nindent 8 }}
+    {{- end }}
+      shareProcessNamespace: true
+      containers:
+        - name: test-job
+          image: docker-gitlab.touk.pl/carpinion/ci/bats-docker
+          command:
+            - /main-wrapper.sh
+            - /usr/sbin/bats
+          args:
+            - -t
+            - /suites
+          env:
+            - name: MANAGEMENT_URL
+              value: "http://{{ include "hermes.management.fullname" . }}:{{ .Values.management.service.port }}"
+            - name: FRONTEND_URL
+              value: "http://{{ include "hermes.frontend.fullname" . }}:{{ .Values.frontend.service.port }}"
+            - name: POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+            - name: WIREMOCK_URL
+              value: "http://$(POD_IP):8080"
+          volumeMounts:
+            - name: suites
+              mountPath: /suites
+            - name: scripts
+              mountPath: /main-wrapper.sh
+              subPath: main-wrapper.sh
+            - name: pids
+              mountPath: /var/run/sidecars
+        - name: test-wiremock
+          image: rodolpheche/wiremock
+          command:
+            - /sidecar-wrapper.sh
+            - /docker-entrypoint.sh
+          args: ["java", "-cp", "/var/wiremock/lib/*:/var/wiremock/extensions/*", "com.github.tomakehurst.wiremock.standalone.WireMockServerRunner"]
+          volumeMounts:
+            - name: scripts
+              mountPath: /sidecar-wrapper.sh
+              subPath: sidecar-wrapper.sh
+            - name: pids
+              mountPath: /var/run/sidecars
+      restartPolicy: Never
+      volumes:
+        - name: pids
+          emptyDir: {}
+        - name: suites
+          configMap:
+            name: {{ include "hermes.fullname" . }}-test-suites
+        - name: scripts
+          configMap:
+            name: {{ include "hermes.fullname" . }}-test-scripts
+            defaultMode: 0744
+
+
