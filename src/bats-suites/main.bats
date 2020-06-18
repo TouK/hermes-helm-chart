@@ -20,9 +20,11 @@ function curl_post() {
 }
 
 function setup() {
+  # given a group
   curl_get ${MANAGEMENT_URL%/}/groups/${GROUP} ||
     curl_post -d "{\"groupName\": \"${GROUP}\"}" ${MANAGEMENT_URL%/}/groups
 
+  # and a topic
   curl_get ${MANAGEMENT_URL%/}/topics/${GROUP}.${TOPIC} ||
     cat  << _END | curl_post -d @- ${MANAGEMENT_URL%/}/topics/
 {
@@ -40,11 +42,8 @@ function setup() {
 }
 _END
   timeout 10 /bin/sh -c "until curl --output /dev/null --silent --fail ${WIREMOCK_URL%/}/__admin/; do sleep 1 && echo -n .; done;"
-}
 
-@test "message should be sent to subscriber" {
-
-  # given a subscriber
+  # and a subscriber
   SUBSCRIBER_NAME=$(head /dev/urandom | tr -dc a-z | head -c 16)
   SUBSCRIBER_URL=${WIREMOCK_URL%/}/${SUBSCRIBER_NAME}
   cat << _END | curl_post -d @- ${WIREMOCK_URL%/}/__admin/mappings
@@ -68,7 +67,15 @@ _END
     "topicName": "${GROUP}.${TOPIC}"
 }
 _END
+}
 
+function teardown() {
+  # afterwards remove the subscription
+  curl_delete ${MANAGEMENT_URL%/}/topics/${GROUP}.${TOPIC}/subscriptions/${SUBSCRIBER_NAME}
+  # the group and topic are left as an example
+}
+
+@test "message should be sent to subscriber" {
   # when a message has been posted on the topic
   cat << _END | curl_post -d @- ${FRONTEND_URL%/}/topics/${GROUP}.${TOPIC}
 {
@@ -80,13 +87,11 @@ _END
 
   # then the message is received by the subscriber
   export -f curl_post
-  cat << _END | timeout 60 bash -c "until curl_post -d '$(cat)' ${WIREMOCK_URL%/}/__admin/requests/count | grep '\"count\" : 1'; do sleep 10; done"
+  cat << _END | timeout 90 bash -c "until curl_post -d '$(cat)' ${WIREMOCK_URL%/}/__admin/requests/count | grep '\"count\" : 1'; do sleep 10; done"
 {
     "method": "POST",
     "url": "/${SUBSCRIBER_NAME}"
 }
 _END
 
-  # afterwards remove the subscription
-  curl_delete ${MANAGEMENT_URL%/}/topics/${GROUP}.${TOPIC}/subscriptions/${SUBSCRIBER_NAME}
 }

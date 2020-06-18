@@ -45,5 +45,5 @@ data:
     schema:
       repository:
         serverUrl: {{ include "hermes.schemaRegistryUrl" . }}
-
-  
+        subjectSuffixEnabled: true
+        subjectNamespaceEnabled: true

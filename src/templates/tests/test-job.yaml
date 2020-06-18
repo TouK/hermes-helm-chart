@@ -46,7 +46,7 @@ spec:
           command:
             - /sidecar-wrapper.sh
             - /docker-entrypoint.sh
-          args: ["java", "-cp", "/var/wiremock/lib/*:/var/wiremock/extensions/*", "com.github.tomakehurst.wiremock.standalone.WireMockServerRunner"]
+          args: ["java", "-cp", "/var/wiremock/lib/*:/var/wiremock/extensions/*", "com.github.tomakehurst.wiremock.standalone.WireMockServerRunner", "--verbose"]
           volumeMounts:
             - name: scripts
               mountPath: /sidecar-wrapper.sh

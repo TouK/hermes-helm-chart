@@ -9,7 +9,7 @@ keywords:
   - allegro
 type: application
 version: 0.1.4-SNAPSHOT
-appVersion: 1.4.6
+appVersion: 1.4.7
 sources:
   - https://github.com/allegro/hermes
 maintainers:
@@ -19,7 +19,7 @@ maintainers:
 
 dependencies:
   - name: kafka
-    version: ^0.21.0
+    version: ^0.21.2
     repository: "@incubator"
     condition: kafka.enabled
   - name: schema-registry

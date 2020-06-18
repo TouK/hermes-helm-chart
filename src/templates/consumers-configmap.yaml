@@ -18,6 +18,8 @@ data:
     {{- end }}
 
     schema.repository.serverUrl={{ include "hermes.schemaRegistryUrl" . }}
+    schema.repository.subject.suffix.enabled=true
+    schema.repository.subject.namespace.enabled=true
 
     metrics.graphite.reporter=false
 

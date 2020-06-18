@@ -8,14 +8,8 @@ stages:
   - deploy
   - verify
 
-publish-private:
-  stage: publish
-  tags:
-    - aws
-  except:
-    - tags
-  script:
-    - curl -u publisher:MzQwMjY0NTk4ZDc0 --fail --data-binary "@dist/$NAME-$VERSION.tgz" $CHART_REPOSITORY_PRIVATE_URL
+variables:
+  CHART_REPOSITORY_URL: "${CHART_REPOSITORY_PRIVATE_URL}"
 
 verify:
   stage: verify
@@ -25,7 +19,7 @@ verify:
     - tags
   environment:
     name: $CI_COMMIT_REF_NAME
-  when:
-    manual
+  when: delayed
+  start_in: 5 minutes
   script:
     - helm test "$CI_ENVIRONMENT_SLUG"

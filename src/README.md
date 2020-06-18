@@ -35,6 +35,16 @@ $ helm install --name my-release touk/hermes -f values.yaml
 The chart contains 3 deployments - for frontend, consumers and managment components.
 The default configuration installs Kafka and Zookeeper as well.
 
+## Testing after installation
+
+You can test your installation by running:
+```console
+$ helm test my-release
+```
+It will create a group, topic, and a sample subscriber. Then it will send a message and check if it reaches 
+the subscriber. The subscription will be removed afterwards, but the group and topic will be left intact
+as an example.   
+
 ## Uninstalling the Chart
 
 To uninstall/delete the my-release deployment:
