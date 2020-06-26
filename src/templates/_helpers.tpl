@@ -206,7 +206,7 @@ Define zookeeper storage path based on namespace
 */}}
 {{- define "hermes.zookeeperRoot" -}}
 {{- if .Values.kafka.namespace -}}
-    /hermes-{{ .Values.kafka.namespace }}
+    /hermes-{{ tpl .Values.kafka.namespace . }}
 {{- else -}}
     /hermes
 {{- end -}}
