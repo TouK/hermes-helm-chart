@@ -10,8 +10,8 @@ management:
   replicaCount: 1
 
   image:
-    repository: touk/hermes-management
-    tag: 1.4.11
+    repository: allegro/hermes-management
+    tag: hermes-1.4.13
     pullPolicy: IfNotPresent
 
   nameOverride: ""
@@ -65,8 +65,8 @@ frontend:
   replicaCount: 1
 
   image:
-    repository: touk/hermes-frontend
-    tag: 1.4.11
+    repository: allegro/hermes-frontend
+    tag: hermes-1.4.13
     pullPolicy: IfNotPresent
 
   nameOverride: ""
@@ -122,8 +122,8 @@ consumers:
   replicaCount: 1
 
   image:
-    repository: touk/hermes-consumers
-    tag: 1.4.11
+    repository: allegro/hermes-consumers
+    tag: hermes-1.4.13
     pullPolicy: IfNotPresent
 
   nameOverride: ""

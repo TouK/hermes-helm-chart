@@ -31,12 +31,9 @@ spec:
           imagePullPolicy: {{ .Values.frontend.image.pullPolicy }}
           volumeMounts:
             - name: config
-              mountPath: /etc/frontend
+              mountPath: /etc/hermes
             - name: storage
               mountPath: /opt/frontend/storage
-          env:
-            - name: HERMES_FRONTEND_OPTS
-              value: "-Darchaius.configurationSource.additionalUrls=file:///etc/frontend/frontend.properties -Dfrontend.port={{ .Values.frontend.service.port }}"
           ports:
             - name: http
               containerPort: 8080

@@ -6,12 +6,22 @@ metadata:
     {{- include "hermes.management.labels" . | nindent 4 }}
 data:
   management.yaml: |-
-    server:
-      port: {{ .Values.management.service.port }}
-
     application:
       name: hermes-management
 
+    topic:
+      replicationFactor: 1
+
+    zookeeper:
+      enabled: false
+
+    storage:
+      pathPrefix: {{ include "hermes.zookeeperRoot" . }}
+      clusters:
+        -
+          datacenter: dc
+          clusterName: zk
+          connectionString: {{ include "hermes.zookeeperUrl" . }}
 
     kafka:
     {{- if .Values.kafka.namespace }}
@@ -24,26 +34,51 @@ data:
           connectionString: {{ include "hermes.zookeeperUrl" . }}
           connectionTimeout: 3000
           bootstrapKafkaServer: {{ include "hermes.kafkaUrl" . }}
-    
-    storage:
-      pathPrefix: {{ include "hermes.zookeeperRoot" . }}
-      clusters:
-        -
-          datacenter: dc
-          clusterName: zk
-          connectionString: {{ include "hermes.zookeeperUrl" . }}
-
-    topic:
-      replicationFactor: 1
 
     metrics:
+      graphiteHttpUri: graphite:8082
       graphite:
-        host: graphite
-      graphiteHttpUri: http://localhost:80
-      enabled: false
+        enabled: true
+
+    server:
+      port: {{ .Values.management.service.port }}
+
+    spring:
+      jersey:
+        type: filter
+
+    management:
+      endpoints:
+        web:
+          base-path: /
+      rest-template:
+        connect-timeout: 2000
+        read-timeout: 2000
+      server:
+        servlet:
+          context-path: /
+      health:
+        periodSeconds: 30
+        enabled: true
+      consumer-groups:
+        create-manually: true
+
+    audit.enabled: false
+
+    topicOwnerCache:
+      refreshRateInSeconds: 300 # 5 minutes
+
+    subscriptionOwnerCache:
+      refreshRateInSeconds: 300
 
     schema:
       repository:
+        type: schema_registry
         serverUrl: {{ include "hermes.schemaRegistryUrl" . }}
         subjectSuffixEnabled: true
         subjectNamespaceEnabled: true
+        validationEnabled: true
+
+    console:
+      configurationLocation: console/config-local.json
+      configurationType: classpath_resource
