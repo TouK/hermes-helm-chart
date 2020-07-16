@@ -2,24 +2,10 @@ include:
   - project: 'carpinion/ci/templates'
     file: 'vanilla-helm.yaml'
 
-stages:
-  - build
-  - publish
-  - deploy
-  - verify
-
 variables:
   CHART_REPOSITORY_URL: "${CHART_REPOSITORY_PRIVATE_URL}"
+  CHART_SRC_DIR: ./src/helm
 
 verify:
-  stage: verify
-  tags:
-    - aws
-  except:
-    - tags
-  environment:
-    name: $CI_COMMIT_REF_NAME
   when: delayed
   start_in: 5 minutes
-  script:
-    - helm test "$CI_ENVIRONMENT_SLUG"
