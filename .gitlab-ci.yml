@@ -3,34 +3,8 @@ include:
     file: 'vanilla-helm.yaml'
 
 variables:
-  BRANCH: master
-  REPO: "https://github.com/allegro/hermes.git"
   CHART_REPOSITORY_URL: "${CHART_REPOSITORY_PRIVATE_URL}"
   CHART_SRC_DIR: ./src/helm
-  APP_VERSION: "${CI_COMMIT_REF_NAME}"
-
-build.docker:
-  stage: build
-  image: docker
-  tags:
-    - aws
-  services:
-    - docker:dind
-  script:
-    - docker login -u "$CI_REGISTRY_USER" -p "$CI_BUILD_TOKEN" "$CI_REGISTRY"
-    - docker login -u "$DOCKER_HUB_USER" -p "$DOCKER_HUB_PASSWORD"
-
-    - docker pull "touk/hermes-frontend:$CI_COMMIT_REF_NAME" || true
-    - docker pull "touk/hermes-consumers:$CI_COMMIT_REF_NAME" || true
-    - docker pull "touk/hermes-management:$CI_COMMIT_REF_NAME" || true
-
-    - docker build ./src/docker/frontend --build-arg BRANCH=${BRANCH} --build-arg REPO=${REPO} -t "touk/hermes-frontend:$CI_COMMIT_REF_NAME"
-    - docker build ./src/docker/consumers --build-arg BRANCH=${BRANCH} --build-arg REPO=${REPO} -t "touk/hermes-consumers:$CI_COMMIT_REF_NAME"
-    - docker build ./src/docker/management --build-arg BRANCH=${BRANCH} --build-arg REPO=${REPO} -t "touk/hermes-management:$CI_COMMIT_REF_NAME"
-
-    - docker push "touk/hermes-frontend:$CI_COMMIT_REF_NAME"
-    - docker push "touk/hermes-consumers:$CI_COMMIT_REF_NAME"
-    - docker push "touk/hermes-management:$CI_COMMIT_REF_NAME"
 
 verify:
   when: delayed

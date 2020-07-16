@@ -27,7 +27,7 @@ spec:
         - name: {{ template "hermes.name" . }}-{{ .Values.management.name }}
           securityContext:
             {{- toYaml .Values.management.securityContext | nindent 12 }}
-          image: "{{ .Values.management.image.repository }}:{{ default .Chart.AppVersion .Values.management.image.tag }}"
+          image: "{{ .Values.management.image.repository }}:{{ .Values.management.image.tag }}"
           imagePullPolicy: {{ .Values.management.image.pullPolicy }}
           volumeMounts:
             - name: config
