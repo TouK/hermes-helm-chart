@@ -1,6 +1,3 @@
-imagePullSecrets:
-  - name: gitlab-registry
-
 kafka:
   namespace: "{{ .Release.Name }}"
   replicas: 1

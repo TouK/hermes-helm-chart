@@ -19,6 +19,13 @@ function curl_post() {
   curl -f -k -v -H "Content-type: application/json" -X POST "$@"
 }
 
+# timeout command has different syntax in Ubuntu and BusyBox
+if [[ $(realpath $(which timeout)) =~ "busybox" ]]; then
+  function timeout() {
+    $(which timeout) -t "$@"
+  }
+fi
+
 function setup() {
   # given a group
   curl_get ${MANAGEMENT_URL%/}/groups/${GROUP} ||
