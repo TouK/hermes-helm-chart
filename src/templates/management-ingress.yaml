@@ -1,8 +1,8 @@
 {{- if .Values.management.ingress.enabled -}}
 {{- $fullName := include "hermes.management.fullname" . -}}
-{{- $svcPort := .Values.management.service.port -}}
+{{- $svcPort := include "hermes.management.svcPort" . -}}
 {{- $tlsSecretName := default (printf "%s-tls" $fullName) .Values.management.ingress.tlsSecretName -}}
-{{- $fqdn := printf "%s.%s" (default $fullName .Values.management.ingress.host) (required "Disable ingress for management or provide a domain name (management.ingress.domain)" .Values.management.ingress.domain) -}}
+{{- $fqdn := include "hermes.management.fqdn" . -}}
 {{- if semverCompare ">=1.14-0" .Capabilities.KubeVersion.GitVersion -}}
 apiVersion: networking.k8s.io/v1beta1
 {{- else -}}

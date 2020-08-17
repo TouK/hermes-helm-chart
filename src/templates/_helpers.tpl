@@ -211,3 +211,26 @@ Define zookeeper storage path based on namespace
     /hermes
 {{- end -}}
 {{- end -}}
+
+{{/*
+Define fully qualified domain name for Management module
+*/}}
+{{- define "hermes.management.fqdn" -}}
+{{- $domain := required "Disable ingress for management or provide a domain name (management.ingress.domain)" .Values.management.ingress.domain -}}
+{{- $fullName := default (include "hermes.management.fullname" .) .Values.management.ingress.host -}}
+{{- printf "%s.%s" $fullName $domain -}}
+{{- end -}}
+
+{{/*
+Define service port for Management module
+*/}}
+{{- define "hermes.management.svcPort" -}}
+{{- .Values.management.service.port -}}
+{{- end -}}
+
+{{/*
+Define service external url for Management module
+*/}}
+{{- define "hermes.management.svcExternalUrl" -}}
+https://{{- include "hermes.management.fqdn" . -}}
+{{- end -}}

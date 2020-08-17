@@ -1,2 +1,4 @@
-hermes/charts
-hermes/*.lock
+.idea/
+dist/
+src/Chart.lock
+src/charts/
