@@ -9,6 +9,9 @@ management:
     pullPolicy: Always
   ingress:
     enabled: true
+    annotations:
+      certmanager.k8s.io/cluster-issuer: "letsencrypt-prod"
+    domain: carpinion.touk.pl
 frontend:
   image:
     pullPolicy: Always
