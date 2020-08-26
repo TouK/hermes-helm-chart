@@ -8,7 +8,7 @@ management:
   image:
     pullPolicy: Always
   ingress:
-    enabled: false
+    enabled: true
 frontend:
   image:
     pullPolicy: Always
