@@ -1,6 +1,3 @@
 include:
   - project: 'carpinion/ci/templates'
     file: 'vanilla-helm.yaml'
-
-variables:
-  CHART_REPOSITORY_URL: "${CHART_REPOSITORY_PRIVATE_URL}"
