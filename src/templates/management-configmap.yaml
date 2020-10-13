@@ -83,3 +83,7 @@ data:
     console:
       configurationLocation: console/config-local.json
       configurationType: classpath_resource
+
+    {{- with .Values.management.cors }}
+    cors: {{ tpl (toJson .) $ }}
+    {{- end }}

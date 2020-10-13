@@ -9,6 +9,8 @@ management:
     pullPolicy: Always
   ingress:
     enabled: false
+  cors:
+    allowed-origin: hermes.cloud.nussknacker.io
 frontend:
   image:
     pullPolicy: Always
