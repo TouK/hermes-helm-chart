@@ -10,7 +10,7 @@ management:
   ingress:
     enabled: false
   cors:
-    allowed-origin: hermes.cloud.nussknacker.io
+    allowed-origin: https://hermes.cloud.nussknacker.io
 frontend:
   image:
     pullPolicy: Always
