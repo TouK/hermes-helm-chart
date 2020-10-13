@@ -9,7 +9,7 @@ keywords:
   - allegro
 type: application
 version: 0.3.2-SNAPSHOT
-appVersion: 1.5.2
+appVersion: 1.5.3
 sources:
   - https://github.com/allegro/hermes
 maintainers:

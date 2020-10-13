@@ -1,3 +1,11 @@
 include:
   - project: 'carpinion/ci/templates'
     file: 'vanilla-helm.yaml'
+
+publish.release:
+  variables:
+    CHART_REPOSITORY_URL: ${CHARTS_PUBLIC_RELEASES_URL}
+
+publish.snapshot:
+  variables:
+    CHART_REPOSITORY_URL: ${CHARTS_PUBLIC_SNAPSHOTS_URL}
