@@ -8,7 +8,8 @@ management:
   image:
     pullPolicy: Always
   ingress:
-    enabled: false
+    enabled: true
+    domain: carpinion.touk.pl
   cors:
     allowed-origin: https://hermes.cloud.nussknacker.io
 frontend:
