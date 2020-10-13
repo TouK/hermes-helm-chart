@@ -12,3 +12,7 @@ publish.release:
 publish.snapshot:
   variables:
     CHART_REPOSITORY_URL: ${CHARTS_PUBLIC_SNAPSHOTS_URL}
+
+deploy:
+  variables:
+    CHART_REPOSITORY_URL: ${CHARTS_PUBLIC_SNAPSHOTS_URL}
