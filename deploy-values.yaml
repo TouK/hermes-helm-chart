@@ -11,7 +11,7 @@ management:
     enabled: true
     domain: carpinion.touk.pl
   cors:
-    allowed-origin: https://hermes.cloud.nussknacker.io
+    allowed-origin: "https://{{ .Release.Name }}.hermes.cloud.nussknacker.io"
 frontend:
   image:
     pullPolicy: Always
