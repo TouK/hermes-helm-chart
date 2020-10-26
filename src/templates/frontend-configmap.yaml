@@ -23,6 +23,7 @@ data:
     schema.repository.subject.namespace.enabled=true
 
     metrics.graphite.reporter=false
+    frontend.message.preview.enabled={{ .Values.frontend.preview.enabled }}
   logback.xml: |-
     <?xml version="1.0" encoding="UTF-8"?>
     <configuration>

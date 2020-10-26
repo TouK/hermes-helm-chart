@@ -62,6 +62,8 @@ management:
 frontend:
   name: "frontend"
   replicaCount: 1
+  preview:
+    enabled: true
 
   image:
     repository: allegro/hermes-frontend
