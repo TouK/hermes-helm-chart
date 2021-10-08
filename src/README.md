@@ -65,7 +65,7 @@ incompatible breaking change needing manual actions.
 | Parameter                                 | Description                                                           | Default
 |-------------------------------------------|-----------------------------------------------------------------------|------------------------
 | `kafka.enabled`                           | If True, installs Kafka chart                                         | `true`
-| `kafka.url`                               | URL of Kafka cluster (ignored when installing Kafka chart)            | `null`
+| `kafka.bootstrapServers`                  | Kafka cluster address (ignored when installing Kafka chart)            | `null`
 | `kafka.zookeeper.enabled`                 | If True, installs Zookeeper chart along with Kafka                    | `true`
 | `kafka.zookeeper.url`                     | URL of Zookeeper cluster (ignored when installing Zookeper chart)     | `null`
 | `kafka.*` `kafka.zookeeper.*`             | Kafka and Zookeeper properties                                        | [See incubator/kafka chart](https://hub.helm.sh/charts/incubator/kafka)

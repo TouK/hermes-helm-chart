@@ -166,6 +166,7 @@ consumers:
 
 kafka:
   enabled: true
+  bootstrapServers: # ignored when the Kafka dependency is enabled
 
 apicurio-registry:
   enabled: true
