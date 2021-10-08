@@ -166,21 +166,8 @@ consumers:
 
 kafka:
   enabled: true
-  imageTag: 5.5.1
-  testsEnabled: false
-  persistence:
-    enabled: true
-  url: ""
-  zookeeper:
-    image:
-      tag: 3.6.1
-    persistence:
-      enabled: true
-    url: ""
-  namespace: ""
 
-schema-registry:
-  imageTag: 5.5.1
+apicurio-registry:
   enabled: true
   kafka:
     enabled: false

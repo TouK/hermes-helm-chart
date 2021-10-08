@@ -171,11 +171,11 @@ Create the name of the service account to use for the consumers component
 {{/*
 Define kafka URL based on user provided values
 */}}
-{{- define "hermes.kafkaUrl" -}}
+{{- define "hermes.kafkaBootstrapServers" -}}
 {{- if .Values.kafka.enabled -}}
-    {{ .Release.Name }}-kafka:9092
+    {{ include "kafka.fullname" .Subcharts.kafka }}:{{ .Values.kafka.service.port }}
 {{- else -}}
-    {{ required "Enable kafka or provide a valid .Values.kafka.url entry!" ( tpl .Values.kafka.url . ) }}
+    {{ required "Enable kafka or provide a valid .Values.kafka.bootstrapServers entry!" ( tpl .Values.kafka.bootstrapServers . ) }}
 {{- end -}}
 {{- end -}}
 
@@ -184,7 +184,7 @@ Define zookeper URL based on user provided values
 */}}
 {{- define "hermes.zookeeperUrl" -}}
 {{- if and .Values.kafka.enabled .Values.kafka.zookeeper.enabled -}}
-    {{ .Release.Name }}-zookeeper:2181
+    {{ include "kafka.zookeeper.fullname" .Subcharts.kafka }}:{{ .Values.kafka.zookeeper.containerPort }}
 {{- else -}}
     {{ required "Enable zookeeper or provide a valid .Values.kafka.zookeeper.url entry!" ( tpl .Values.kafka.zookeeper.url . ) }}
 {{- end -}}
@@ -194,10 +194,10 @@ Define zookeper URL based on user provided values
 Define schema registry URL based on user provided values
 */}}
 {{- define "hermes.schemaRegistryUrl" -}}
-{{- if index .Values "schema-registry" "enabled" -}}
-    http://{{ .Release.Name }}-schema-registry:8081
+{{- if index .Values "apicurio-registry" "enabled" -}}
+    http://{{ include "apicurio-registry.fullname" ( index .Subcharts "apicurio-registry" ) }}:{{ index .Values "apicurio-registry" "service" "port" }}/apis/ccompat/v6/
 {{- else -}}
-    {{ required "Enable schema-registry or provide a valid .Values.schema-registry.url entry!" ( tpl ( index .Values "schema-registry" "url" ) . ) }}
+    {{ required "Enable apicurio-registry or provide a valid .Values.apicurio-registry.url entry!" ( tpl ( index .Values "apicurio-registry" "url" ) . ) }}
 {{- end -}}
 {{- end -}}
 

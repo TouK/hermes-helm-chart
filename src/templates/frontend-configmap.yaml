@@ -9,7 +9,7 @@ data:
     zookeeper.connect.string={{ include "hermes.zookeeperUrl" . }}
     zookeeper.root={{ include "hermes.zookeeperRoot" . }}
 
-    kafka.broker.list={{ include "hermes.kafkaUrl" . }}
+    kafka.broker.list={{ include "hermes.kafkaBootstrapServers" . }}
     kafka.zookeeper.connect.string={{ include "hermes.zookeeperUrl" . }}
     {{- if .Values.kafka.namespace }}
     kafka.namespace={{ tpl .Values.kafka.namespace . }}

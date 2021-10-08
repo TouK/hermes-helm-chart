@@ -11,7 +11,7 @@ data:
     zookeeper.connection.timeout=5000
     zookeeper.session.timeout=7000
 
-    kafka.broker.list={{ include "hermes.kafkaUrl" . }}
+    kafka.broker.list={{ include "hermes.kafkaBootstrapServers" . }}
     kafka.zookeeper.connect.string={{ include "hermes.zookeeperUrl" . }}
     {{- if .Values.kafka.namespace }}
     kafka.namespace={{ tpl .Values.kafka.namespace . }}

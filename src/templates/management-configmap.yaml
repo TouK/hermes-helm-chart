@@ -34,7 +34,7 @@ data:
           clusterName: primary
           connectionString: {{ include "hermes.zookeeperUrl" . }}
           connectionTimeout: 3000
-          bootstrapKafkaServer: {{ include "hermes.kafkaUrl" . }}
+          bootstrapKafkaServer: {{ include "hermes.kafkaBootstrapServers" . }}
 
     metrics:
       graphiteHttpUri: graphite:8082

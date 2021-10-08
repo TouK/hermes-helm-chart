@@ -34,6 +34,10 @@ spec:
               mountPath: /etc/hermes
             - name: storage
               mountPath: /opt/frontend/storage
+          envFrom:
+            - configMapRef:
+                optional: true
+                name: {{ default (printf "%s-env" (include "hermes.frontend.fullname" . )) .Values.envConfigMapOverride }}
           ports:
             - name: http
               containerPort: 8080

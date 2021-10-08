@@ -35,6 +35,10 @@ spec:
           env:
             - name: SERVER_USE_FORWARD_HEADERS
               value: "true"
+          envFrom:
+            - configMapRef:
+                optional: true
+                name: {{ default (printf "%s-env" (include "hermes.management.fullname" . )) .Values.envConfigMapOverride }}
           ports:
             - name: http
               containerPort: 8080
