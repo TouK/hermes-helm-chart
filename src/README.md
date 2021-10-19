@@ -64,12 +64,18 @@ incompatible breaking change needing manual actions.
 
 | Parameter                                 | Description                                                           | Default
 |-------------------------------------------|-----------------------------------------------------------------------|------------------------
-| `kafka.enabled`                           | If True, installs Kafka chart                                         | `true`
-| `kafka.bootstrapServers`                  | Kafka cluster address (ignored when installing Kafka chart)            | `null`
-| `kafka.zookeeper.enabled`                 | If True, installs Zookeeper chart along with Kafka                    | `true`
-| `kafka.zookeeper.url`                     | URL of Zookeeper cluster (ignored when installing Zookeper chart)     | `null`
-| `kafka.*` `kafka.zookeeper.*`             | Kafka and Zookeeper properties                                        | [See incubator/kafka chart](https://hub.helm.sh/charts/incubator/kafka)
-| `kafka.namespace`                         | The prefix added to all Kafka topic names managed by Hermes           | `hermes`
+| `kafka.enabled`                           | If True, Kafka is installed from a dependency chart                   | `true`
+| `global.kafka.bootstrapServers`           | Kafka cluster address (if the dependency disabled)                    | `[]`
+| `global.kafka.name`                       | Name of a Kafka service without a release name (if the dependency disabled and server not provided) | `kafka`
+| `global.kafka.fullname`                   | Name of a Kafka service with a release name (an alternative to the above) | `null`
+| `global.kafka.port`                       | Port of a Kafka service (if the dependency disabled and server not provided) | `9092`
+| `kafka.zookeeper.enabled`                 | If True, Zookeeper is installed from a dependency chart along with Kafka | `true`
+| `global.zookeeper.servers`                | Zookeeper cluster address (if the dependency disabled)                | `[]`
+| `global.zookeeper.name`                   | Name of a Zookeeper service without a release name (if the dependency disabled and server not provided) | `zookeeper`
+| `global.zookeeper.fullname`               | Name of a Zookeeper service with a release name (an alternative to the above) | `null`
+| `global.zookeeper.port`                   | Port of a Zookeeper service (if the dependency disabled and server not provided)                                          | `2181`
+| `kafkaNamespace`                          | The prefix added to all Kafka topic names managed by Hermes           | `null`
+| `kafka.*` `kafka.zookeeper.*`             | Kafka and Zookeeper dependencies' properties                          | [See incubator/kafka chart](https://hub.helm.sh/charts/incubator/kafka)
 | `management.ingress.enabled`              |                                                                       | `false`
 | `management.ingress.annotations`          | Use this to restrict access to Mangement GUI                          | `{}`
 | `management.ingress.domain`               |                                                                       | `null`

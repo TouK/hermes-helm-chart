@@ -6,15 +6,15 @@ metadata:
     {{- include "hermes.consumers.labels" . | nindent 4 }}
 data:
   consumers.properties: |-
-    zookeeper.connect.string={{ include "hermes.zookeeperUrl" . }}
+    zookeeper.connect.string={{ include "hermes.zookeeperConnectString" . }}
     zookeeper.root={{ include "hermes.zookeeperRoot" . }}
     zookeeper.connection.timeout=5000
     zookeeper.session.timeout=7000
 
     kafka.broker.list={{ include "hermes.kafkaBootstrapServers" . }}
-    kafka.zookeeper.connect.string={{ include "hermes.zookeeperUrl" . }}
-    {{- if .Values.kafka.namespace }}
-    kafka.namespace={{ tpl .Values.kafka.namespace . }}
+    kafka.zookeeper.connect.string={{ include "hermes.zookeeperConnectString" . }}
+    {{- if .Values.kafkaNamespace }}
+    kafkaNamespace={{ tpl .Values.kafkaNamespace . }}
     {{- end }}
 
     schema.repository.serverUrl={{ include "hermes.schemaRegistryUrl" . }}

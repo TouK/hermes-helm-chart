@@ -164,11 +164,28 @@ consumers:
 
   affinity: {}
 
-kafka:
-  enabled: true
-  bootstrapServers: # ignored when the Kafka dependency is enabled
+kafkaNamespace: ~
 
 apicurio-registry:
   enabled: true
   kafka:
     enabled: false
+
+kafka:
+  enabled: true
+  externalZookeeper:
+    servers: '[ {{- include "hermes.globalZookeeperConnectString" . -}} ]'
+
+global:
+  schemaRegistry:
+    url: ""
+  kafka:
+    bootstrapServers: []
+    fullname: ~
+    name: kafka
+    port: 9092
+  zookeeper:
+    servers: []
+    fullname: ~
+    name: zookeeper
+    port: 2181

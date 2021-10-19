@@ -172,41 +172,107 @@ Create the name of the service account to use for the consumers component
 Define kafka URL based on user provided values
 */}}
 {{- define "hermes.kafkaBootstrapServers" -}}
-{{- if .Values.kafka.enabled -}}
-    {{ include "kafka.fullname" .Subcharts.kafka }}:{{ .Values.kafka.service.port }}
+{{- if .Values.kafka.enabled }}
+{{- include "kafka.fullname" .Subcharts.kafka }}:{{- .Values.kafka.service.port }}
 {{- else -}}
-    {{ required "Enable kafka or provide a valid .Values.kafka.bootstrapServers entry!" ( tpl .Values.kafka.bootstrapServers . ) }}
-{{- end -}}
-{{- end -}}
+{{- required "Enable Kafka or provide global values for bootstrap servers." (include "hermes.globalKafkaBootstrapServers" . | trim) }}
+{{- end }}
+{{- end }}
+
+{{- define "hermes.globalKafkaBootstrapServers" -}}
+{{- if .Values.global.kafka.bootstrapServers }}
+{{- tpl (join "," .Values.global.kafka.bootstrapServers) . }}
+{{- else }}
+{{- if .Values.global.kafka.fullname }}
+{{- .Values.global.kafka.fullname | trunc 63 | trimSuffix "-" }}
+{{- else }}
+{{- if .Values.global.kafka.name }}
+{{- $name := .Values.global.kafka.name }}
+{{- if contains $name .Release.Name }}
+{{- .Release.Name | trunc 63 | trimSuffix "-" }}
+{{- else }}
+{{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" }}
+{{- end }}
+{{- end }}
+{{- end }}
+{{- if .Values.global.kafka.port }}
+{{- printf ":%v" .Values.global.kafka.port }}
+{{- end }}
+{{- end }}
+{{- end }}
 
 {{/*
 Define zookeper URL based on user provided values
 */}}
-{{- define "hermes.zookeeperUrl" -}}
-{{- if and .Values.kafka.enabled .Values.kafka.zookeeper.enabled -}}
-    {{ include "kafka.zookeeper.fullname" .Subcharts.kafka }}:{{ .Values.kafka.zookeeper.containerPort }}
+{{- define "hermes.zookeeperConnectString" -}}
+{{- if and .Values.kafka.enabled (index (.Values.kafka.zookeeper | default dict) "enabled") }}
+{{- include "kafka.zookeeper.fullname" .Subcharts.kafka }}:{{- .Values.kafka.zookeeper.service.port }}
 {{- else -}}
-    {{ required "Enable zookeeper or provide a valid .Values.kafka.zookeeper.url entry!" ( tpl .Values.kafka.zookeeper.url . ) }}
-{{- end -}}
-{{- end -}}
+{{- required "Enable Zookeeper in the Kafka subchart or provide global values for a connection string." (include "hermes.globalZookeeperConnectString" . | trim) }}
+{{- end }}
+{{- end }}
+
+{{- define "hermes.globalZookeeperConnectString" -}}
+{{- if .Values.global.zookeeper.servers }}
+{{- tpl (join "," .Values.global.zookeeper.servers) . }}
+{{- else }}
+{{- if .Values.global.zookeeper.fullname }}
+{{- .Values.global.zookeeper.fullname | trunc 63 | trimSuffix "-" }}
+{{- else }}
+{{- if .Values.global.zookeeper.name }}
+{{- $name := .Values.global.zookeeper.name }}
+{{- if contains $name .Release.Name }}
+{{- .Release.Name | trunc 63 | trimSuffix "-" }}
+{{- else }}
+{{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" }}
+{{- end }}
+{{- end }}
+{{- end }}
+{{- if .Values.global.zookeeper.port }}
+{{- printf ":%v" .Values.global.zookeeper.port }}
+{{- end }}
+{{- end }}
+{{- end }}
 
 {{/*
 Define schema registry URL based on user provided values
 */}}
 {{- define "hermes.schemaRegistryUrl" -}}
 {{- if index .Values "apicurio-registry" "enabled" -}}
-    http://{{ include "apicurio-registry.fullname" ( index .Subcharts "apicurio-registry" ) }}:{{ index .Values "apicurio-registry" "service" "port" }}/apis/ccompat/v6/
+http://{{ include "apicurio-registry.fullname" ( index .Subcharts "apicurio-registry" ) }}:{{ index .Values "apicurio-registry" "service" "port" }}/apis/ccompat/v6/
 {{- else -}}
-    {{ required "Enable apicurio-registry or provide a valid .Values.apicurio-registry.url entry!" ( tpl ( index .Values "apicurio-registry" "url" ) . ) }}
+{{- required "Enable apicurio-registry or provide global values for a scheme registry url." (include "hermes.globalSchemaRegistryUrl" . | trim) }}
 {{- end -}}
+{{- end -}}
+
+{{- define "hermes.globalSchemaRegistryUrl" -}}
+{{- if .Values.global.schemaRegistry.url }}
+{{- .Values.global.schemaRegistry.url }}
+{{- else }}
+{{- if .Values.global.schemaRegistry.fullname }}
+{{- .Values.global.schemaRegistry.fullname | trunc 63 | trimSuffix "-" | printf "http://%s" }}
+{{- else }}
+{{- if .Values.global.schemaRegistry.name }}
+{{- $name := .Values.global.schemaRegistry.name }}
+{{- if contains $name .Release.Name }}
+{{- .Release.Name | trunc 63 | trimSuffix "-" | printf "http://%s" }}
+{{- else }}
+{{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" | printf "http://%s" }}
+{{- end }}
+{{- end }}
+{{- end }}
+{{- if .Values.global.schemaRegistry.port }}
+{{- printf ":%d" .Values.global.schemaRegistry.port }}
+{{- end }}
+{{- end }}
 {{- end -}}
 
 {{/*
 Define zookeeper storage path based on namespace
 */}}
 {{- define "hermes.zookeeperRoot" -}}
-{{- if .Values.kafka.namespace -}}
-    /hermes-{{ tpl .Values.kafka.namespace . }}
+{{- if .Values.kafkaNamespace -}}
+    /hermes-{{ tpl .Values.kafkaNamespace . }}
 {{- else -}}
     /hermes
 {{- end -}}

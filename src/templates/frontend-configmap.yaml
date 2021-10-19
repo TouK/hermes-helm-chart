@@ -6,13 +6,13 @@ metadata:
     {{- include "hermes.frontend.labels" . | nindent 4 }}
 data:
   frontend.properties: |-
-    zookeeper.connect.string={{ include "hermes.zookeeperUrl" . }}
+    zookeeper.connect.string={{ include "hermes.zookeeperConnectString" . }}
     zookeeper.root={{ include "hermes.zookeeperRoot" . }}
 
     kafka.broker.list={{ include "hermes.kafkaBootstrapServers" . }}
-    kafka.zookeeper.connect.string={{ include "hermes.zookeeperUrl" . }}
-    {{- if .Values.kafka.namespace }}
-    kafka.namespace={{ tpl .Values.kafka.namespace . }}
+    kafka.zookeeper.connect.string={{ include "hermes.zookeeperConnectString" . }}
+    {{- if .Values.kafkaNamespace }}
+    kafkaNamespace={{ tpl .Values.kafkaNamespace . }}
     {{- end }}
 
     kafka.topic.partitions=4
