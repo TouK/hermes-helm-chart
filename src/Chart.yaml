@@ -8,7 +8,7 @@ keywords:
   - hermes
   - allegro
 type: application
-version: 0.5.1-SNAPSHOT
+version: 0.5.1
 appVersion: 1.9.3
 sources:
   - https://github.com/allegro/hermes
