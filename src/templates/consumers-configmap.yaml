@@ -14,7 +14,7 @@ data:
     kafka.broker.list={{ include "hermes.kafkaBootstrapServers" . }}
     kafka.zookeeper.connect.string={{ include "hermes.zookeeperConnectString" . }}
     {{- if .Values.kafkaNamespace }}
-    kafkaNamespace={{ tpl .Values.kafkaNamespace . }}
+    kafka.namespace={{ tpl .Values.kafkaNamespace . }}
     {{- end }}
 
     schema.repository.serverUrl={{ include "hermes.schemaRegistryUrl" . }}
