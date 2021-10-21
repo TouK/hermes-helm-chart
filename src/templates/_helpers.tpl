@@ -264,6 +264,9 @@ http://{{ include "apicurio-registry.fullname" ( index .Subcharts "apicurio-regi
 {{- if .Values.global.schemaRegistry.port }}
 {{- printf ":%d" .Values.global.schemaRegistry.port }}
 {{- end }}
+{{- if .Values.global.schemaRegistry.path }}
+{{- printf "/%s" ( .Values.global.schemaRegistry.path | trimPrefix "/" ) }}
+{{- end }}
 {{- end }}
 {{- end -}}
 

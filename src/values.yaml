@@ -178,7 +178,11 @@ kafka:
 
 global:
   schemaRegistry:
-    url: ""
+    url: ~
+    fullname: ~
+    name: apicurio-registry
+    port: ~
+    path: /apis/ccompat/v6/
   kafka:
     bootstrapServers: []
     fullname: ~
