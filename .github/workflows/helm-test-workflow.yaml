@@ -7,13 +7,14 @@ on:
   push:
     branches:
       - main
+      - github-workflow
     tags:
       - '*'
 env:
   CHART_SRC_DIR: ./src
   XDG_CACHE_HOME: $GITHUB_WORKSPACE/.cache/
-  RELEASE_NAME: nu-helm-release-${{github.run_id}}
-  NAME: nussknacker
+  RELEASE_NAME: hermes-helm-release-${{github.run_id}}
+  NAME: hermes
   CHART_REPOSITORY_AUTH: "${{ secrets.CHARTS_PUBLIC_AUTH}}"
   CHARTS_PUBLIC_SNAPSHOTS_URL: "https://helm-charts.touk.pl/nexus/repository/helm-snapshots/"
   CHARTS_PUBLIC_RELEASES_URL: "https://helm-charts.touk.pl/nexus/repository/helm-releases/"
@@ -42,9 +43,9 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: helm-build
-          path: "dist/nussknacker-${{steps.setVersion.outputs.version}}.tgz"
-  test-flink:
-    name: test flink mode
+          path: "dist/${{env.NAME}}-${{steps.setVersion.outputs.version}}.tgz"
+  helm-test:
+    name: helm test
     runs-on: ubuntu-latest
     needs: [ build ]
     steps:
@@ -61,35 +62,14 @@ jobs:
             --config=.k3d/single-cluster.yml
             --trace
       - name: helmUpgrade
-        run: helm upgrade -i "${{env.RELEASE_NAME}}" dist/*.tgz --version "${{needs.build.outputs.version}}"  --wait --debug -f deploy-values.yaml --set hermes.enabled=false
-      - name: helmTestRelease
-        run: ./test.sh "${{env.RELEASE_NAME}}"
-  test-streaming-lite:
-    name: test streaming-lite mode
-    runs-on: ubuntu-latest
-    needs: [ build ]
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - uses: actions/download-artifact@v2
-        with:
-          name: helm-build
-          path: dist
-      - uses: AbsaOSS/k3d-action@v2
-        with:
-          cluster-name: "k3s-default"
-          args: >-
-            --config=.k3d/single-cluster.yml
-            --trace
-      - name: helmUpgrade
-        run: helm upgrade -i "${{env.RELEASE_NAME}}" dist/*.tgz --version "${{needs.build.outputs.version}}" --wait --debug -f deploy-values.yaml -f deploy-values-lite.yaml  --set hermes.enabled=false
+        run: helm upgrade -i "${{env.RELEASE_NAME}}" dist/*.tgz --version "${{needs.build.outputs.version}}" --wait --debug -f deploy-values.yaml
       - name: helmTestRelease
         run: ./test.sh "${{env.RELEASE_NAME}}"
   publish-snapshot:
     name: publish-snapshot
-    if: ${{ github.ref == 'refs/heads/main'}}
+    if: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/github-workflow'}} #condition to be removed after testing
     runs-on: ubuntu-latest
-    needs: [ build, test-flink, test-streaming-lite ]
+    needs: [ build, helm-test ]
     steps:
       - uses: actions/download-artifact@v2
         with:
@@ -100,7 +80,7 @@ jobs:
     name: publish-release
     if: ${{ startsWith(github.ref, 'refs/tags') }}
     runs-on: ubuntu-latest
-    needs: [ build, test-flink, test-streaming-lite ]
+    needs: [ build, helm-test ]
     steps:
       - uses: actions/download-artifact@v2
         with:
