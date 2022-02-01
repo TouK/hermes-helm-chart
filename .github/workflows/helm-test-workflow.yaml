@@ -7,7 +7,6 @@ on:
   push:
     branches:
       - main
-      - github-workflow
     tags:
       - '*'
 env:
@@ -67,7 +66,7 @@ jobs:
         run: ./test.sh "${{env.RELEASE_NAME}}"
   publish-snapshot:
     name: publish-snapshot
-    if: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/github-workflow'}} #condition to be removed after testing
+    if: ${{ github.ref == 'refs/heads/main'}}
     runs-on: ubuntu-latest
     needs: [ build, helm-test ]
     steps:
