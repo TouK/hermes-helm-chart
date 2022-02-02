@@ -7,6 +7,7 @@ on:
   push:
     branches:
       - main
+      - github-workflow
     tags:
       - '*'
 env:
@@ -35,7 +36,7 @@ jobs:
         id: setVersion
         run: echo "::set-output name=version::$(helm show chart ${{env.CHART_SRC_DIR}} | grep ^version | sed -e "s/.*:\ //;s/SNAPSHOT/SNAPSHOT.${{github.run_id}}/")"
       - name: buildAll
-        run: ./setup.sh
+        run: helm dependencies build ${{env.CHART_SRC_DIR}}
       - name: packageAll
         run: helm package ${{env.CHART_SRC_DIR}} -d dist --version "${{steps.setVersion.outputs.version}}"
       - name: Store target
