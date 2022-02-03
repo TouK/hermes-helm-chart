@@ -94,7 +94,7 @@ _END
 
   # then the message is received by the subscriber
   export -f curl_post
-  cat << _END | timeout 90 bash -c "until curl_post -d '$(cat)' ${WIREMOCK_URL%/}/__admin/requests/count | grep '\"count\" : 1'; do sleep 10; done"
+  cat << _END | timeout 150 bash -c "until curl_post -d '$(cat)' ${WIREMOCK_URL%/}/__admin/requests/count | grep '\"count\" : 1'; do sleep 10; done"
 {
     "method": "POST",
     "url": "/${SUBSCRIBER_NAME}"
