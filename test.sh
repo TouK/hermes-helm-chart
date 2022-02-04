@@ -11,6 +11,9 @@ function logOnExit {
 
     MANAGEMENT_POD=$(kubectl get pod | grep -o -e "$RELEASE-management\-\w\+\-\w\+")
     kubectl logs "$MANAGEMENT_POD"
+    kubectl logs $RELEASE-zookeeper-0
+    kubectl logs $RELEASE-kafka-0
+
 }
 trap 'logOnExit' EXIT
 
