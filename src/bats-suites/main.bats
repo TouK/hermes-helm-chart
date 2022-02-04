@@ -48,7 +48,7 @@ function setup() {
     "schema":	"{\n \"namespace\": \"${GROUP}\",\n \"name\": \"${TOPIC}\",\n \"type\": \"record\",\n \"doc\": \"This is a sample schema definition for some Hermes message\",\n \"fields\": [\n {\n \"name\": \"id\",\n \"type\": \"string\",\n \"doc\": \"Message id\"\n },\n {\n \"name\": \"content\",\n \"type\": \"string\",\n \"doc\": \"Message content\"\n },\n {\n \"name\": \"tags\",\n \"type\": { \"type\": \"array\", \"items\": \"string\" },\n \"doc\": \"Message tags\"\n },\n {\n \"name\": \"__metadata\",\n \"type\": [\n \"null\",\n {\n \"type\": \"map\",\n \"values\": \"string\"\n }\n ],\n \"default\": null,\n \"doc\": \"Field used in Hermes internals to propagate metadata like hermes-id\"\n }\n ]\n}"
 }
 _END
-  timeout 60 /bin/sh -c "until curl --output /dev/null --silent --fail ${WIREMOCK_URL%/}/__admin/; do sleep 1 && echo -n .; done;"
+  timeout 10 /bin/sh -c "until curl --output /dev/null --silent --fail ${WIREMOCK_URL%/}/__admin/; do sleep 1 && echo -n .; done;"
 
   # and a subscriber
   SUBSCRIBER_NAME=$(head /dev/urandom | tr -dc a-z | head -c 16)
@@ -94,7 +94,7 @@ _END
 
   # then the message is received by the subscriber
   export -f curl_post
-  cat << _END | timeout 240 bash -c "until curl_post -d '$(cat)' ${WIREMOCK_URL%/}/__admin/requests/count | grep '\"count\" : 1'; do sleep 10; done"
+  cat << _END | timeout 90 bash -c "until curl_post -d '$(cat)' ${WIREMOCK_URL%/}/__admin/requests/count | grep '\"count\" : 1'; do sleep 10; done"
 {
     "method": "POST",
     "url": "/${SUBSCRIBER_NAME}"
