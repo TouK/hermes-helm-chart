@@ -85,7 +85,7 @@ _END
   }
 }
 _END
-  cat << _END | curl -k -v -H "Content-type: application/json"  -d @- ${MANAGEMENT_URL%/}/topics/${GROUP}.${TOPIC}/subscriptions
+  cat << _END | curl_post -d @- ${MANAGEMENT_URL%/}/topics/${GROUP}.${TOPIC}/subscriptions
 {
     "contentType": "JSON",
     "description": "test",
