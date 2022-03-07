@@ -33,7 +33,7 @@ data:
           datacenter: dc
           clusterName: primary
           connectionString: {{ include "hermes.zookeeperConnectString" . }}
-          connectionTimeout: 3000
+          connectionTimeout: 5000
           bootstrapKafkaServer: {{ include "hermes.kafkaBootstrapServers" . }}
 
     metrics:
