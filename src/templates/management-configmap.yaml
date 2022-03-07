@@ -35,7 +35,7 @@ data:
           connectionString: {{ include "hermes.zookeeperConnectString" . }}
           connectionTimeout: 5000
           bootstrapKafkaServer: {{ include "hermes.kafkaBootstrapServers" . }}
-
+          kafkaServerRequestTimeoutMillis: 10000
     metrics:
       graphiteHttpUri: graphite:8082
       graphite:
