@@ -13,11 +13,8 @@ function logOnExit {
     kubectl logs "$MANAGEMENT_POD"
     kubectl logs $RELEASE-zookeeper-0
     kubectl logs $RELEASE-kafka-0
-    kubectl exec -it $RELEASE-kafka-0 -- kafka-topics.sh --bootstrap-server $RELEASEkafka:9092 --create --topic t1
-    kubectl exec -it $RELEASE-kafka-0 -- kafka-topics.sh --bootstrap-server $RELEASEkafka:9092 --list
 
 }
 trap 'logOnExit' EXIT
 
-kubectl exec -it $RELEASE-kafka-0 -- kafka-topics.sh --bootstrap-server $RELEASEkafka:9092 --list
 helm test "$RELEASE"
