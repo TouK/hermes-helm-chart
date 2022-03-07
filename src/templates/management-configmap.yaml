@@ -53,8 +53,8 @@ data:
         web:
           base-path: /
       rest-template:
-        connect-timeout: 2000
-        read-timeout: 2000
+        connect-timeout: 10000
+        read-timeout: 10000
       server:
         servlet:
           context-path: /
