@@ -19,5 +19,5 @@ function logOnExit {
 }
 trap 'logOnExit' EXIT
 
-kubectl exec $RELEASE-kafka-0 -- kafka-topics.sh --bootstrap-server $RELEASEkafka:9092 --list
+kubectl exec -it $RELEASE-kafka-0 -- kafka-topics.sh --bootstrap-server $RELEASEkafka:9092 --list
 helm test "$RELEASE"

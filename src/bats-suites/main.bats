@@ -32,7 +32,7 @@ function setup() {
     curl_post -d "{\"groupName\": \"${GROUP}\"}" ${MANAGEMENT_URL%/}/groups
 
   sleep 10
-  echo "Creating topic "`date`
+  echo "Creating topic"
   # and a topic
   curl_get ${MANAGEMENT_URL%/}/topics/${GROUP}.${TOPIC} ||
     cat  << _END | curl -k -v -H "Content-type: application/json"  -d @- ${MANAGEMENT_URL%/}/topics/
@@ -50,7 +50,7 @@ function setup() {
     "schema":	"{\n \"namespace\": \"${GROUP}\",\n \"name\": \"${TOPIC}\",\n \"type\": \"record\",\n \"doc\": \"This is a sample schema definition for some Hermes message\",\n \"fields\": [\n {\n \"name\": \"id\",\n \"type\": \"string\",\n \"doc\": \"Message id\"\n },\n {\n \"name\": \"content\",\n \"type\": \"string\",\n \"doc\": \"Message content\"\n },\n {\n \"name\": \"tags\",\n \"type\": { \"type\": \"array\", \"items\": \"string\" },\n \"doc\": \"Message tags\"\n },\n {\n \"name\": \"__metadata\",\n \"type\": [\n \"null\",\n {\n \"type\": \"map\",\n \"values\": \"string\"\n }\n ],\n \"default\": null,\n \"doc\": \"Field used in Hermes internals to propagate metadata like hermes-id\"\n }\n ]\n}"
 }
 _END
-  echo "Once again??"`date` >&2
+  echo "Once again??" >&2
   sleep 10
   curl_get ${MANAGEMENT_URL%/}/topics/${GROUP}.${TOPIC} ||
     cat  << _END |  curl -k -v -H "Content-type: application/json" -d @- ${MANAGEMENT_URL%/}/topics/
@@ -68,7 +68,6 @@ _END
     "schema":	"{\n \"namespace\": \"${GROUP}\",\n \"name\": \"${TOPIC}\",\n \"type\": \"record\",\n \"doc\": \"This is a sample schema definition for some Hermes message\",\n \"fields\": [\n {\n \"name\": \"id\",\n \"type\": \"string\",\n \"doc\": \"Message id\"\n },\n {\n \"name\": \"content\",\n \"type\": \"string\",\n \"doc\": \"Message content\"\n },\n {\n \"name\": \"tags\",\n \"type\": { \"type\": \"array\", \"items\": \"string\" },\n \"doc\": \"Message tags\"\n },\n {\n \"name\": \"__metadata\",\n \"type\": [\n \"null\",\n {\n \"type\": \"map\",\n \"values\": \"string\"\n }\n ],\n \"default\": null,\n \"doc\": \"Field used in Hermes internals to propagate metadata like hermes-id\"\n }\n ]\n}"
 }
 _END
-  echo "And now??"`date` >&2
 
   timeout 20 /bin/sh -c "until curl --output /dev/null --max-time 5 --silent --fail ${WIREMOCK_URL%/}/__admin/; do sleep 1 && echo -n .; done;"
 
