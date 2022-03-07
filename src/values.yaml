@@ -9,6 +9,11 @@ management:
   name: "management"
   replicaCount: 1
 
+  topic:
+    replicationFactor: 1
+    defaultSchemaIdAwareSerializationEnabled: true
+    partitions: 4
+
   image:
     repository: allegro/hermes-management
     pullPolicy: IfNotPresent

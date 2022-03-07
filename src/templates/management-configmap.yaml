@@ -9,10 +9,6 @@ data:
     application:
       name: hermes-management
 
-    topic:
-      replicationFactor: 1
-      defaultSchemaIdAwareSerializationEnabled: true
-
     zookeeper:
       enabled: false
 
@@ -88,3 +84,8 @@ data:
     {{- with .Values.management.cors }}
     cors: {{ tpl (toJson .) $ }}
     {{- end }}
+
+    {{- with .Values.management.topic }}
+    topic: {{ tpl (toJson .) $ }}
+    {{- end }}
+

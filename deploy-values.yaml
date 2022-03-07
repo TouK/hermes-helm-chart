@@ -11,6 +11,8 @@ management:
   ingress:
     enabled: true
     domain: carpinion.touk.pl
+  topic:
+    partitions: 1  
   cors:
     allowed-origin: "https://{{ .Release.Name }}.hermes.cloud.nussknacker.io"
 frontend:
