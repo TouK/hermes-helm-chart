@@ -33,7 +33,7 @@ data:
           connectionString: {{ include "hermes.zookeeperConnectString" . }}
           connectionTimeout: 10000
           bootstrapKafkaServer: {{ include "hermes.kafkaBootstrapServers" . }}
-          kafkaServerRequestTimeoutMillis: 30000
+          kafkaServerRequestTimeoutMillis: 10000
 
     metrics:
       graphiteHttpUri: graphite:8082
@@ -100,10 +100,14 @@ data:
             </encoder>
         </appender>
 
-        <logger name="org.apache.zookeeper" level="DEBUG" />
-        <logger name="kafka" level="DEBUG"/>
 
-        <root level="DEBUG">
+        <!-- Selector spams ERROR level messages every 100ms on IOException -->
+        <logger name="org.apache.kafka.common.network.Selector" level="OFF"/>
+        <logger name="org.apache.zookeeper" level="WARN" />
+        <logger name="org.apache.kafka" level="INFO" />
+        <logger name="kafka" level="INFO"/>
+
+        <root level="INFO">
             <appender-ref ref="STDOUT" />
         </root>
 
