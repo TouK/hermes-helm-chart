@@ -9,6 +9,8 @@ data:
     application:
       name: hermes-management
 
+    logging.config: /etc/hermes/logback.xml
+
     zookeeper:
       enabled: false
 

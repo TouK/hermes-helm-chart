@@ -35,6 +35,8 @@ spec:
           env:
             - name: SERVER_USE_FORWARD_HEADERS
               value: "true"
+            - name: JAVA_OPTS
+              value: "-Dlogback.configurationFile=/etc/hermes/logback.xml"
           envFrom:
             - configMapRef:
                 optional: true
