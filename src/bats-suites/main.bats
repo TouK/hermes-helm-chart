@@ -53,7 +53,7 @@ _END
   echo "Once again??" >&2
   sleep 10
   curl_get ${MANAGEMENT_URL%/}/topics/${GROUP}.${TOPIC} ||
-    cat  << _END | curl_post -d @- ${MANAGEMENT_URL%/}/topics/
+    cat  << _END | curl -k -v -H "Content-type: application/json" -d @- ${MANAGEMENT_URL%/}/topics/
 {
     "name": "${GROUP}.${TOPIC}",
     "description": "This is a test topic",
