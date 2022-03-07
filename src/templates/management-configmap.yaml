@@ -29,9 +29,9 @@ data:
           datacenter: dc
           clusterName: primary
           connectionString: {{ include "hermes.zookeeperConnectString" . }}
-          connectionTimeout: 3000
+          connectionTimeout: 10000
           bootstrapKafkaServer: {{ include "hermes.kafkaBootstrapServers" . }}
-          kafkaServerRequestTimeoutMillis: 10000
+          kafkaServerRequestTimeoutMillis: 30000
 
     metrics:
       graphiteHttpUri: graphite:8082
