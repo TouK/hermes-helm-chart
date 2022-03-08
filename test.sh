@@ -18,3 +18,4 @@ function logOnExit {
 trap 'logOnExit' EXIT
 
 helm test "$RELEASE"
+logOnExit

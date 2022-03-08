@@ -9,9 +9,7 @@ data:
     application:
       name: hermes-management
 
-    topic:
-      replicationFactor: 1
-      defaultSchemaIdAwareSerializationEnabled: true
+    logging.config: /etc/hermes/logback.xml
 
     zookeeper:
       enabled: false
@@ -33,8 +31,9 @@ data:
           datacenter: dc
           clusterName: primary
           connectionString: {{ include "hermes.zookeeperConnectString" . }}
-          connectionTimeout: 3000
+          connectionTimeout: 10000
           bootstrapKafkaServer: {{ include "hermes.kafkaBootstrapServers" . }}
+          kafkaServerRequestTimeoutMillis: 10000
 
     metrics:
       graphiteHttpUri: graphite:8082
@@ -87,3 +86,33 @@ data:
     {{- with .Values.management.cors }}
     cors: {{ tpl (toJson .) $ }}
     {{- end }}
+
+    {{- with .Values.management.topic }}
+    topic: {{ tpl (toJson .) $ }}
+    {{- end }}
+  logback.xml: |-
+    <?xml version="1.0" encoding="UTF-8"?>
+    <configuration>
+
+        <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+            <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+                <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %logger{36} - %msg%n</Pattern>
+            </encoder>
+        </appender>
+
+
+        <!-- Selector spams ERROR level messages every 100ms on IOException -->
+        <logger name="org.apache.kafka.common.network.Selector" level="OFF"/>
+        <logger name="org.apache.zookeeper" level="WARN" />
+        <logger name="org.apache.kafka" level="INFO" />
+        <logger name="kafka" level="INFO"/>
+
+        <root level="INFO">
+            <appender-ref ref="STDOUT" />
+        </root>
+
+    </configuration>
+
+
+  
+
