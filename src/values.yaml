@@ -17,6 +17,7 @@ management:
   image:
     repository: allegro/hermes-management
     pullPolicy: IfNotPresent
+    tag: 1.2.1
 
   nameOverride: ""
   fullnameOverride: ""
@@ -73,6 +74,7 @@ frontend:
   image:
     repository: allegro/hermes-frontend
     pullPolicy: IfNotPresent
+    tag: 1.2.1
 
   nameOverride: ""
   fullnameOverride: ""
@@ -129,6 +131,7 @@ consumers:
   image:
     repository: allegro/hermes-consumers
     pullPolicy: IfNotPresent
+    tag: 1.2.1
 
   nameOverride: ""
   fullnameOverride: ""
