@@ -2,7 +2,6 @@
 {{- $fullName := include "hermes.frontend.fullname" . -}}
 {{- $svcPort := .Values.frontend.service.port -}}
 {{- $tlsSecretName := default (printf "%s-tls" $fullName) .Values.frontend.ingress.tlsSecretName -}}
-{{- $fqdn := printf "%s.%s" (default $fullName .Values.frontend.ingress.host) (required "Disable ingress for frontend or provide a domain name (frontend.ingress.domain)" .Values.frontend.ingress.domain) -}}
 {{- if semverCompare ">=1.19-0" .Capabilities.KubeVersion.GitVersion -}}
 apiVersion: networking.k8s.io/v1
 {{- else if semverCompare ">=1.14-0" .Capabilities.KubeVersion.GitVersion -}}
@@ -22,11 +21,12 @@ metadata:
 spec:
   tls:
     - secretName: {{ $tlsSecretName }}
+      {{- if not .Values.frontend.ingress.skipHost }}
       hosts:
-        - {{ $fqdn | quote }}
+        - {{ include "hermes.frontend.fqdn" . | quote }}
+      {{- end }}
   rules:
-    - host: {{ $fqdn | quote }}
-      http:
+    - http:
         paths:
           - path: /
             {{- if semverCompare ">=1.19-0" $.Capabilities.KubeVersion.GitVersion }}
@@ -42,4 +42,7 @@ spec:
               serviceName: {{ $fullName }}
               servicePort: {{ $svcPort }}
               {{- end }}
-{{- end }}
+      {{- if not .Values.frontend.ingress.skipHost }}
+      host: {{ include "hermes.frontend.fqdn" . | quote }}
+      {{- end }}
+  {{- end }}
