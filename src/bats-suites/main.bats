@@ -27,18 +27,6 @@ SCHEMA=$(cat << _END | sed -e 's/$/\\n/g' -e 's/"/\\"/g'
       "name": "tags",
       "type": { "type": "array", "items": "string" },
       "doc": "Message tags"
-    },
-    {
-      "name": "__metadata",
-      "type": [
-        "null",
-        {
-          "type": "map",
-          "values": "string"
-        }
-      ],
-      "default": null,
-      "doc": "Field used in Hermes internals to propagate metadata like hermes-id"
     }
   ]
 }

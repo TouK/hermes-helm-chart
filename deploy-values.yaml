@@ -13,6 +13,10 @@ management:
     skipHost: true
   topic:
     partitions: 1
+    avroContentTypeMetadataRequired: false
+  console:
+    topic:
+      avroContentTypeMetadataRequired: false
 frontend:
   image:
     pullPolicy: Always

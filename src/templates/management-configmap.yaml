@@ -82,6 +82,9 @@ data:
     console:
       configurationLocation: console/config-local.json
       configurationType: classpath_resource
+      {{- with .Values.management.console.topic }}
+      topic: {{ tpl (toJson .) $ }}
+      {{- end }}
 
     {{- with .Values.management.cors }}
     cors: {{ tpl (toJson .) $ }}
