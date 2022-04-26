@@ -7,6 +7,7 @@ RELEASE=$1
 function logOnExit {
     kubectl get pod
     kubectl logs job/$RELEASE-test-job test-job || echo "Failed to log job..."
+    kubectl logs job/$RELEASE-test-job test-wiremock || echo "Failed to log wiremock..."
     kubectl describe job/$RELEASE-test-job || echo "Failed to describe job..."
 
     MANAGEMENT_POD=$(kubectl get pod | grep -o -e "$RELEASE-management\-\w\+\-\w\+")

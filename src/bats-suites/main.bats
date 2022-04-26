@@ -6,6 +6,44 @@
 
 GROUP=testgroup
 TOPIC=testtopic
+SCHEMA=$(cat << _END | sed -e 's/$/\\n/g' -e 's/"/\\"/g'
+{
+  "namespace": "${GROUP}",
+  "name": "${TOPIC}",
+  "type": "record",
+  "doc": "This is a sample schema definition for some Hermes message",
+  "fields": [
+    {
+      "name": "id",
+      "type": "string",
+      "doc": "Message id"
+    },
+    {
+      "name": "content",
+      "type": "string",
+      "doc": "Message content"
+    },
+    {
+      "name": "tags",
+      "type": { "type": "array", "items": "string" },
+      "doc": "Message tags"
+    },
+    {
+      "name": "__metadata",
+      "type": [
+        "null",
+        {
+          "type": "map",
+          "values": "string"
+        }
+      ],
+      "default": null,
+      "doc": "Field used in Hermes internals to propagate metadata like hermes-id"
+    }
+  ]
+}
+_END
+)
 
 function curl_get() {
   curl -f -k -v -X GET "$@"
@@ -45,7 +83,7 @@ function setup() {
         "source": "Plaintext",
         "id": "Test"
     },
-    "schema":	"{\n \"namespace\": \"${GROUP}\",\n \"name\": \"${TOPIC}\",\n \"type\": \"record\",\n \"doc\": \"This is a sample schema definition for some Hermes message\",\n \"fields\": [\n {\n \"name\": \"id\",\n \"type\": \"string\",\n \"doc\": \"Message id\"\n },\n {\n \"name\": \"content\",\n \"type\": \"string\",\n \"doc\": \"Message content\"\n },\n {\n \"name\": \"tags\",\n \"type\": { \"type\": \"array\", \"items\": \"string\" },\n \"doc\": \"Message tags\"\n },\n {\n \"name\": \"__metadata\",\n \"type\": [\n \"null\",\n {\n \"type\": \"map\",\n \"values\": \"string\"\n }\n ],\n \"default\": null,\n \"doc\": \"Field used in Hermes internals to propagate metadata like hermes-id\"\n }\n ]\n}"
+    "schema":	"$SCHEMA"
 }
 _END
   timeout 10 /bin/sh -c "until curl --output /dev/null --silent --fail ${WIREMOCK_URL%/}/__admin/; do sleep 1 && echo -n .; done;"
