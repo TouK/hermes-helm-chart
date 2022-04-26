@@ -1,5 +1,5 @@
 1. Get the management component application URL by running these commands:
-{{- if .Values.management.ingress.enabled }}
+{{- if and .Values.management.ingress.enabled (not .Values.management.ingress.skipHost) }}
 {{- range $host := .Values.management.ingress.hosts }}
   {{- range .paths }}
   http{{ if $.Values.management.ingress.tls }}s{{ end }}://{{ $host.host }}{{ . }}
@@ -15,9 +15,8 @@
   export SERVICE_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ include "hermes.fullname" . }} --template "{{"{{ range (index .status.loadBalancer.ingress 0) }}{{.}}{{ end }}"}}")
   echo http://$SERVICE_IP:{{ .Values.management.service.port }}
 {{- else if contains "ClusterIP" .Values.management.service.type }}
-  export POD_NAME=$(kubectl get pods --namespace {{ .Release.Namespace }} -l "app.kubernetes.io/name={{ include "hermes.name" . }},app.kubernetes.io/instance={{ .Release.Name }}" -o jsonpath="{.items[0].metadata.name}")
   echo "Visit http://127.0.0.1:8080 to use your application"
-  kubectl --namespace {{ .Release.Namespace }} port-forward $POD_NAME 8080:80
+  kubectl --namespace {{ .Release.Namespace }} port-forward service/{{ include "hermes.management.fullname" . }} 8080:{{ .Values.management.service.port }}
 {{- end }}
 
 2. Get the frontend component application URL by running these commands:
