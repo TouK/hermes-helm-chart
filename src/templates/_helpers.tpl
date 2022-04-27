@@ -291,6 +291,15 @@ Define fully qualified domain name for Management module
 {{- end -}}
 
 {{/*
+Define fully qualified domain name for Frontend module
+*/}}
+{{- define "hermes.frontend.fqdn" -}}
+{{- $domain := required "Disable ingress for frontend or provide a domain name (frontend.ingress.domain)" .Values.frontend.ingress.domain -}}
+{{- $fullName := default (include "hermes.frontend.fullname" .) .Values.frontend.ingress.host -}}
+{{- printf "%s.%s" $fullName $domain -}}
+{{- end -}}
+
+{{/*
 Define service port for Management module
 */}}
 {{- define "hermes.management.svcPort" -}}
