@@ -14,6 +14,9 @@ management:
     defaultSchemaIdAwareSerializationEnabled: true
     partitions: 4
 
+  console:
+    topic:
+
   image:
     repository: allegro/hermes-management
     pullPolicy: IfNotPresent
