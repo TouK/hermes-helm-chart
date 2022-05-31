@@ -186,6 +186,13 @@ consumers:
 
   affinity: {}
 
+  startupProbe:
+    periodSeconds: 3
+    failureThreshold: 40
+  livenessProbe:
+    periodSeconds: 5
+    failureThreshold: 3
+
 kafkaNamespace: ~
 
 apicurio-registry:
