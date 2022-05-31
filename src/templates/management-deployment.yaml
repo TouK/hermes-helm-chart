@@ -47,10 +47,14 @@ spec:
             httpGet:
               path: /
               port: http
-          readinessProbe:
-            httpGet:
-              path: /
-              port: http
+            periodSeconds: {{ .Values.management.livenessProbe.periodSeconds }}
+            failureThreshold: {{ .Values.management.livenessProbe.failureThreshold }}
+          startupProbe:
+              httpGet:
+                path: /
+                port: http
+              periodSeconds: {{ .Values.management.startupProbe.periodSeconds }}
+              failureThreshold: {{ .Values.management.startupProbe.failureThreshold }}
           resources:
             {{- toYaml .Values.management.resources | nindent 12 }}
       volumes:

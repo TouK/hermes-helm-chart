@@ -67,6 +67,13 @@ management:
 
   affinity: {}
 
+  startupProbe:
+    periodSeconds: 3
+    failureThreshold: 40
+  livenessProbe:
+    periodSeconds: 5
+    failureThreshold: 3
+
 frontend:
   name: "frontend"
   replicaCount: 1
@@ -125,6 +132,13 @@ frontend:
 
   affinity: {}
 
+  startupProbe:
+    periodSeconds: 3
+    failureThreshold: 40
+  livenessProbe:
+    periodSeconds: 5
+    failureThreshold: 3
+
 consumers:
   name: "consumers"
   replicaCount: 1
@@ -171,6 +185,13 @@ consumers:
   tolerations: []
 
   affinity: {}
+
+  startupProbe:
+    periodSeconds: 3
+    failureThreshold: 40
+  livenessProbe:
+    periodSeconds: 5
+    failureThreshold: 3
 
 kafkaNamespace: ~
 

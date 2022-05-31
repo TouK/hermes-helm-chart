@@ -46,10 +46,14 @@ spec:
             httpGet:
               path: /status/health
               port: http
-          readinessProbe:
+            periodSeconds: {{ .Values.consumers.livenessProbe.periodSeconds }}
+            failureThreshold: {{ .Values.consumers.livenessProbe.failureThreshold }}
+          startupProbe:
             httpGet:
               path: /status/health
               port: http
+            periodSeconds: {{ .Values.consumers.startupProbe.periodSeconds }}
+            failureThreshold: {{ .Values.consumers.startupProbe.failureThreshold }}
           resources:
             {{- toYaml .Values.consumers.resources | nindent 12 }}
       volumes:
