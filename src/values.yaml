@@ -67,6 +67,13 @@ management:
 
   affinity: {}
 
+  startupProbe:
+    periodSeconds: 3
+    failureThreshold: 40
+  livenessProbe:
+    periodSeconds: 5
+    failureThreshold: 3
+
 frontend:
   name: "frontend"
   replicaCount: 1
@@ -124,6 +131,13 @@ frontend:
   tolerations: []
 
   affinity: {}
+
+  startupProbe:
+    periodSeconds: 3
+    failureThreshold: 40
+  livenessProbe:
+    periodSeconds: 5
+    failureThreshold: 3
 
 consumers:
   name: "consumers"
