@@ -83,7 +83,8 @@ incompatible breaking change needing manual actions.
 | `frontend.ingress.enabled`                |                                                                       | `false`
 | `frontend.ingress.annotations`            | Use this to restrict access to Frontend API                           | `{}`
 | `frontend.ingress.domain`                 |                                                                       | `null`
-| `frontend.ingress.host`                   |                                                                       | `(Release.Name)-(Chart.Name)`
+| `frontend.additionalConfig`               | Additional config values                                              | `{}`
+| `frontend.secretConfig`                   | Additional config values, mounted as a secret                         | `{}`
 
 
 ## TODO

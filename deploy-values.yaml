@@ -22,6 +22,10 @@ frontend:
     pullPolicy: Always
   ingress:
     enabled: false
+  additionalConfig: 
+    test1: value1
+  secretConfig:  
+    test2: value2
 consumers:
   image:
     pullPolicy: Always
