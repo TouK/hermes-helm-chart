@@ -312,3 +312,9 @@ Define service external url for Management module
 {{- define "hermes.management.svcExternalUrl" -}}
 https://{{- include "hermes.management.fqdn" . -}}
 {{- end -}}
+
+{{- define "print.secrets" -}}
+{{ range $key, $value := .secretConfig }}
+{{ printf "%s=%s" $key $value }}
+{{- end -}}    
+{{- end -}}

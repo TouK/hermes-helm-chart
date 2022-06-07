@@ -58,8 +58,12 @@ spec:
             {{- toYaml .Values.consumers.resources | nindent 12 }}
       volumes:
         - name: config
-          configMap:
-            name: {{ include "hermes.consumers.fullname" . }}
+          projected: 
+            sources:
+            - configMap:
+                name: {{ include "hermes.consumers.fullname" . }}
+            - secret:
+                name: {{ include "hermes.consumers.fullname" . }}-secret
         - name: storage
           hostPath:
             path: "/opt/consumers/storage"
