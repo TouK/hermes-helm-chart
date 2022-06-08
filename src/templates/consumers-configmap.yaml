@@ -24,6 +24,9 @@ data:
     metrics.graphite.reporter=false
 
     consumer.workload.consumers.per.subscription=1
+{{ range $key, $value := .Values.consumers.additionalConfig }}
+  {{ $key | indent 2}}={{ $value }}
+{{- end }}    
   logback.xml: |-
     <?xml version="1.0" encoding="UTF-8"?>
     <configuration>

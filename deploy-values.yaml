@@ -17,15 +17,29 @@ management:
   console:
     topic:
       avroContentTypeMetadataRequired: false
+  additionalConfig: 
+    management-test1: value1
+    management-test1a: value1a
+  secretConfig:  
+    management-test2: value2
+    management-test2a: value2a
 frontend:
   image:
     pullPolicy: Always
   ingress:
     enabled: false
   additionalConfig: 
-    test1: value1
+    frontend-test1: value1
+    frontend-test1a: value1a
   secretConfig:  
-    test2: value2
+    frontend-test2: value2
+    frontend-test2a: value2a
 consumers:
   image:
     pullPolicy: Always
+  additionalConfig: 
+    consumers-test1: value1
+    consumers-test1a: value1a
+  secretConfig:  
+    consumers-test2: value2
+    consumers-test2a: value2a
