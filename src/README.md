@@ -83,12 +83,12 @@ incompatible breaking change needing manual actions.
 | `frontend.ingress.enabled`                |                                                                       | `false`
 | `frontend.ingress.annotations`            | Use this to restrict access to Frontend API                           | `{}`
 | `frontend.ingress.domain`                 |                                                                       | `null`
-| `consumers.additionalConfig`              | Additional config values                                              | `{}`
-| `consumers.secretConfig`                  | Additional config values, mounted as a secret                         | `{}`
-| `frontend.additionalConfig`               | Additional config values                                              | `{}`
-| `frontend.secretConfig`                   | Additional config values, mounted as a secret                         | `{}`
-| `management.additionalConfig`             | Additional config values                                              | `{}`
-| `management.secretConfig`                 | Additional config values, mounted as a secret                         | `{}`
+| `consumers.additionalConfig`              | Additional config values (mounted as additional properties file)      | `{}`
+| `consumers.secretConfig`                  | Additional config values (mounted as a secret with properties file)   | `{}`
+| `frontend.additionalConfig`               | Additional config values (mounted as additional properties file)      | `{}`
+| `frontend.secretConfig`                   | Additional config values (mounted as a secret with properties file)   | `{}`
+| `management.additionalConfig`             | Additional config values (mounted as additional yaml config file)     | `{}`
+| `management.secretConfig`                 | Additional config values (mounted as additional yaml config file)     | `{}`
 
 
 ## TODO
