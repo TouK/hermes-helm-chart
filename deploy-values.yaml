@@ -24,7 +24,7 @@ management:
     management-test2: value2
     management-test2a: value2a
   additionalSecretFiles:
-    management-file.txt: abc
+    management-file.txt: YWJjCg==
 frontend:
   image:
     pullPolicy: Always
@@ -37,7 +37,7 @@ frontend:
     frontend-test2: value2
     frontend-test2a: value2a
   additionalSecretFiles:
-    frontend-file.txt: abc
+    frontend-file.txt: YWJjCg==
 consumers:
   image:
     pullPolicy: Always
@@ -48,4 +48,4 @@ consumers:
     consumers-test2: value2
     consumers-test2a: value2a
   additionalSecretFiles:
-    consumers-file.txt: abc
+    consumers-file.txt: YWJjCg==
