@@ -92,7 +92,9 @@ data:
     {{- with .Values.management.topic }}
     topic: {{ tpl (toJson .) $ }}
     {{- end }}
-    {{ .Values.management.additionalConfig | toYaml | nindent 4 }}
+    {{- with .Values.management.additionalConfig }}
+    {{ tpl (toYaml . | nindent 4) $ }}
+    {{- end }}
   logback.xml: |-
     <?xml version="1.0" encoding="UTF-8"?>
     <configuration>
