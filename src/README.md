@@ -62,36 +62,36 @@ incompatible breaking change needing manual actions.
 
 ## Configuration
 
-| Parameter                          | Description                                                                                             | Default
-|------------------------------------|---------------------------------------------------------------------------------------------------------|------------------------
-| `kafka.enabled`                    | If True, Kafka is installed from a dependency chart                                                     | `true`
-| `global.kafka.bootstrapServers`    | Kafka cluster address (if the dependency disabled)                                                      | `[]`
-| `global.kafka.name`                | Name of a Kafka service without a release name (if the dependency disabled and server not provided)     | `kafka`
-| `global.kafka.fullname`            | Name of a Kafka service with a release name (an alternative to the above)                               | `null`
-| `global.kafka.port`                | Port of a Kafka service (if the dependency disabled and server not provided)                            | `9092`
-| `kafka.zookeeper.enabled`          | If True, Zookeeper is installed from a dependency chart along with Kafka                                | `true`
-| `global.zookeeper.servers`         | Zookeeper cluster address (if the dependency disabled)                                                  | `[]`
-| `global.zookeeper.name`            | Name of a Zookeeper service without a release name (if the dependency disabled and server not provided) | `zookeeper`
-| `global.zookeeper.fullname`        | Name of a Zookeeper service with a release name (an alternative to the above)                           | `null`
-| `global.zookeeper.port`            | Port of a Zookeeper service (if the dependency disabled and server not provided)                        | `2181`
-| `kafkaNamespace`                   | The prefix added to all Kafka topic names managed by Hermes                                             | `null`
-| `kafka.*` `kafka.zookeeper.*`      | Kafka and Zookeeper dependencies' properties                                                            | [See incubator/kafka chart](https://hub.helm.sh/charts/incubator/kafka)
-| `management.ingress.enabled`       |                                                                                                         | `false`
-| `management.ingress.annotations`   | Use this to restrict access to Mangement GUI                                                            | `{}`
-| `management.ingress.domain`        |                                                                                                         | `null`
-| `management.ingress.host`          |                                                                                                         | `(Release.Name)-(Chart.Name)`
-| `frontend.ingress.enabled`         |                                                                                                         | `false`
-| `frontend.ingress.annotations`     | Use this to restrict access to Frontend API                                                             | `{}`
-| `frontend.ingress.domain`          |                                                                                                         | `null`
-| `consumers.additionalConfig`       | Additional config values (mounted as additional properties file)                                        | `{}`
-| `consumers.secretConfig`           | Additional config values (mounted as a secret with properties file)                                     | `{}`
-| `consumers.additionalSecretFiles`  | Additional secret values mounted as separated files                                                     | `{}`
-| `frontend.additionalConfig`        | Additional config values (mounted as additional properties file)                                        | `{}`
-| `frontend.secretConfig`            | Additional config values (mounted as a secret with properties file)                                     | `{}`
-| `frontend.additionalSecretFiles`   | Additional secret values mounted as separated files                                                     | `{}`
-| `management.additionalConfig`      | Additional config values (mounted as additional yaml config file)                                       | `{}`
-| `management.secretConfig`          | Additional config values (mounted as additional yaml config file)                                       | `{}`
-| `management.additionalSecretFiles` | Additional secret values mounted as separated files                                                     | `{}`
+| Parameter                          | Description                                                                                                                        | Default
+|------------------------------------|------------------------------------------------------------------------------------------------------------------------------------|------------------------
+| `kafka.enabled`                    | If True, Kafka is installed from a dependency chart                                                                                | `true`
+| `global.kafka.bootstrapServers`    | Kafka cluster address (if the dependency disabled)                                                                                 | `[]`
+| `global.kafka.name`                | Name of a Kafka service without a release name (if the dependency disabled and server not provided)                                | `kafka`
+| `global.kafka.fullname`            | Name of a Kafka service with a release name (an alternative to the above)                                                          | `null`
+| `global.kafka.port`                | Port of a Kafka service (if the dependency disabled and server not provided)                                                       | `9092`
+| `kafka.zookeeper.enabled`          | If True, Zookeeper is installed from a dependency chart along with Kafka                                                           | `true`
+| `global.zookeeper.servers`         | Zookeeper cluster address (if the dependency disabled)                                                                             | `[]`
+| `global.zookeeper.name`            | Name of a Zookeeper service without a release name (if the dependency disabled and server not provided)                            | `zookeeper`
+| `global.zookeeper.fullname`        | Name of a Zookeeper service with a release name (an alternative to the above)                                                      | `null`
+| `global.zookeeper.port`            | Port of a Zookeeper service (if the dependency disabled and server not provided)                                                   | `2181`
+| `kafkaNamespace`                   | The prefix added to all Kafka topic names managed by Hermes                                                                        | `null`
+| `kafka.*` `kafka.zookeeper.*`      | Kafka and Zookeeper dependencies' properties                                                                                       | [See incubator/kafka chart](https://hub.helm.sh/charts/incubator/kafka)
+| `management.ingress.enabled`       |                                                                                                                                    | `false`
+| `management.ingress.annotations`   | Use this to restrict access to Mangement GUI                                                                                       | `{}`
+| `management.ingress.domain`        |                                                                                                                                    | `null`
+| `management.ingress.host`          |                                                                                                                                    | `(Release.Name)-(Chart.Name)`
+| `frontend.ingress.enabled`         |                                                                                                                                    | `false`
+| `frontend.ingress.annotations`     | Use this to restrict access to Frontend API                                                                                        | `{}`
+| `frontend.ingress.domain`          |                                                                                                                                    | `null`
+| `consumers.additionalConfig`       | Additional config values (mounted as additional properties file)                                                                   | `{}`
+| `consumers.secretConfig`           | Additional config values (mounted as a secret with properties file)                                                                | `{}`
+| `consumers.additionalSecretFiles`  | Additional data mounted as separated files (with key as file name, and value as content, mind that value has to be base64 encoded) | `{}`
+| `frontend.additionalConfig`        | Additional config values (mounted as additional properties file)                                                                   | `{}`
+| `frontend.secretConfig`            | Additional config values (mounted as a secret with properties file)                                                                | `{}`
+| `frontend.additionalSecretFiles`   | Additional data mounted as separated files (with key as file name, and value as content, mind that value has to be base64 encoded) | `{}`
+| `management.additionalConfig`      | Additional config values (mounted as additional yaml config file)                                                                  | `{}`
+| `management.secretConfig`          | Additional config values (mounted as additional yaml config file)                                                                  | `{}`
+| `management.additionalSecretFiles` | Additional data mounted as separated files (with key as file name, and value as content, mind that value has to be base64 encoded) | `{}`
 
 
 ## TODO
