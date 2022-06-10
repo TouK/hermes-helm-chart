@@ -30,8 +30,7 @@ data:
         -
           datacenter: dc
           clusterName: primary
-          connectionString: {{ include "hermes.zookeeperConnectString" . }}
-          connectionTimeout: 10000
+          connectionTimeoutMillis: 10000
           bootstrapKafkaServer: {{ include "hermes.kafkaBootstrapServers" . }}
           kafkaServerRequestTimeoutMillis: 10000
 
@@ -93,6 +92,7 @@ data:
     {{- with .Values.management.topic }}
     topic: {{ tpl (toJson .) $ }}
     {{- end }}
+    {{ .Values.management.additionalConfig | toYaml | nindent 4 }}
   logback.xml: |-
     <?xml version="1.0" encoding="UTF-8"?>
     <configuration>

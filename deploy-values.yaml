@@ -20,9 +20,11 @@ management:
   additionalConfig: 
     management-test1: value1
     management-test1a: value1a
-  secretConfig:  
+  secretConfig:
     management-test2: value2
     management-test2a: value2a
+  additionalSecretFiles:
+    management-file.txt: YWJjCg==
 frontend:
   image:
     pullPolicy: Always
@@ -34,6 +36,8 @@ frontend:
   secretConfig:  
     frontend-test2: value2
     frontend-test2a: value2a
+  additionalSecretFiles:
+    frontend-file.txt: YWJjCg==
 consumers:
   image:
     pullPolicy: Always
@@ -43,3 +47,5 @@ consumers:
   secretConfig:  
     consumers-test2: value2
     consumers-test2a: value2a
+  additionalSecretFiles:
+    consumers-file.txt: YWJjCg==
