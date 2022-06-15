@@ -46,15 +46,13 @@ spec:
               containerPort: 8080
               protocol: TCP
           livenessProbe:
-            httpGet:
-              path: /
-              port: http
+            tcpSocket:
+              port: 8080
             periodSeconds: {{ .Values.management.livenessProbe.periodSeconds }}
             failureThreshold: {{ .Values.management.livenessProbe.failureThreshold }}
           startupProbe:
-              httpGet:
-                path: /
-                port: http
+              tcpSocket:
+                port: 8080
               periodSeconds: {{ .Values.management.startupProbe.periodSeconds }}
               failureThreshold: {{ .Values.management.startupProbe.failureThreshold }}
           resources:
