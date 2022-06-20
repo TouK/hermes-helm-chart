@@ -45,16 +45,17 @@ spec:
             - name: http
               containerPort: 8080
               protocol: TCP
+{{/*      we are using tcp probes to handle both secured and public apis    */}}
           livenessProbe:
             tcpSocket:
-              port: 8080
+              port: http
             periodSeconds: {{ .Values.management.livenessProbe.periodSeconds }}
             failureThreshold: {{ .Values.management.livenessProbe.failureThreshold }}
           startupProbe:
-              tcpSocket:
-                port: 8080
-              periodSeconds: {{ .Values.management.startupProbe.periodSeconds }}
-              failureThreshold: {{ .Values.management.startupProbe.failureThreshold }}
+            tcpSocket:
+              port: http
+            periodSeconds: {{ .Values.management.startupProbe.periodSeconds }}
+            failureThreshold: {{ .Values.management.startupProbe.failureThreshold }}
           resources:
             {{- toYaml .Values.management.resources | nindent 12 }}
       volumes:
