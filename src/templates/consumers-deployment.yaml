@@ -67,9 +67,10 @@ spec:
                 name: {{ include "hermes.consumers.fullname" . }}
             - secret:
                 name: {{ include "hermes.consumers.fullname" . }}-secret
+        {{/* only /tmp is writable TODO: change logback config and after that remove this hostpath volume or replace it with some real PV/PVC pair */}}
         - name: storage
           hostPath:
-            path: "/opt/consumers/storage"
+            path: "/tmp"
       {{- with .Values.consumers.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
