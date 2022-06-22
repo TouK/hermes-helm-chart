@@ -40,7 +40,7 @@ spec:
                 name: {{ default (printf "%s-env" (include "hermes.frontend.fullname" . )) .Values.envConfigMapOverride }}
           env:
             - name: HERMES_FRONTEND_OPTS
-              value: -Darchaius.configurationSource.additionalUrls=file:///etc/hermes/frontend.properties,file:///etc/hermes/frontend-secret.properties -Dlogback.configurationFile=/etc/hermes/logback.xml
+              value: -Darchaius.configurationSource.additionalUrls=file:///etc/hermes/frontend.properties,file:///etc/hermes/frontend-secret.properties -Dlogging.config=file:/etc/hermes/logback.xml
           ports:
             - name: http
               containerPort: 8080

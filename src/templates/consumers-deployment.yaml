@@ -34,6 +34,9 @@ spec:
               mountPath: /etc/hermes
             - name: storage
               mountPath: /opt/consumers/storage
+          env:
+            - name: HERMES_CONSUMERS_OPTS
+              value: -Darchaius.configurationSource.additionalUrls=file:///etc/hermes/consumers.properties,file:///etc/hermes/consumers-secret.properties -Dlogging.config=file:/etc/hermes/logback.xml
           envFrom:
             - configMapRef:
                 optional: true
