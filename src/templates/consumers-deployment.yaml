@@ -32,8 +32,6 @@ spec:
           volumeMounts:
             - name: config
               mountPath: /etc/hermes
-            - name: storage
-              mountPath: /opt/consumers/storage
           env:
             - name: HERMES_CONSUMERS_OPTS
               value: -Darchaius.configurationSource.additionalUrls=file:///etc/hermes/consumers.properties,file:///etc/hermes/consumers-secret.properties -Dlogging.config=file:/etc/hermes/logback.xml
@@ -67,10 +65,6 @@ spec:
                 name: {{ include "hermes.consumers.fullname" . }}
             - secret:
                 name: {{ include "hermes.consumers.fullname" . }}-secret
-        {{/* only /tmp is writable TODO: change logback config and after that remove this hostpath volume or replace it with some real PV/PVC pair */}}
-        - name: storage
-          hostPath:
-            path: "/tmp"
       {{- with .Values.consumers.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
