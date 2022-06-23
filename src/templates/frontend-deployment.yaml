@@ -32,8 +32,6 @@ spec:
           volumeMounts:
             - name: config
               mountPath: /etc/hermes
-            - name: storage
-              mountPath: /opt/frontend/storage
           envFrom:
             - configMapRef:
                 optional: true
@@ -67,10 +65,6 @@ spec:
                 name: {{ include "hermes.frontend.fullname" . }}
             - secret:
                 name: {{ include "hermes.frontend.fullname" . }}-secret
-        {{/* only /tmp is writable TODO: change logback config and after that remove this hostpath volume or replace it with some real PV/PVC pair */}}
-        - name: storage
-          hostPath:
-            path: "/tmp"
       {{- with .Values.management.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
