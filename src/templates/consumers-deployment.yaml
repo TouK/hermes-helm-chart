@@ -35,6 +35,11 @@ spec:
           env:
             - name: HERMES_CONSUMERS_OPTS
               value: -Darchaius.configurationSource.additionalUrls=file:///etc/hermes/consumers.properties,file:///etc/hermes/consumers-secret.properties -Dlogging.config=file:/etc/hermes/logback.xml
+            - name: JAVA_OPTS
+              value: {{ .Values.consumers.javaOpts }}
+          {{- with .Values.consumers.extraEnv -}}
+            {{- . | toYaml | nindent 12 -}}
+          {{- end }}
           envFrom:
             - configMapRef:
                 optional: true

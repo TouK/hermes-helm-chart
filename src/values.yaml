@@ -49,6 +49,8 @@ management:
   ingress:
     enabled: false
 
+  javaOpts: -Xms100m -Xmx100m
+
   resources: {}
     # We usually recommend not to specify default resources and to leave this as a conscious
     # choice for the user. This also increases chances charts run on environments with little
@@ -56,10 +58,10 @@ management:
     # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
     # limits:
     #   cpu: 100m
-    #   memory: 128Mi
+    #   memory: 350Mi
     # requests:
     #   cpu: 100m
-    #   memory: 128Mi
+    #   memory: 250Mi
 
   nodeSelector: {}
 
@@ -114,6 +116,8 @@ frontend:
     annotations: {}
     domain:
 
+  javaOpts: -Xms150m -Xmx150m
+
   resources: {}
     # We usually recommend not to specify default resources and to leave this as a conscious
     # choice for the user. This also increases chances charts run on environments with little
@@ -121,10 +125,10 @@ frontend:
     # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
     # limits:
     #   cpu: 100m
-    #   memory: 128Mi
+    #   memory: 350Mi
     # requests:
     #   cpu: 100m
-    #   memory: 128Mi
+    #   memory: 250Mi
 
   nodeSelector: {}
 
@@ -168,6 +172,8 @@ consumers:
     # runAsNonRoot: true
     runAsUser: 1000
 
+  javaOpts: -Xms200m -Xmx200m
+
   resources: {}
     # We usually recommend not to specify default resources and to leave this as a conscious
     # choice for the user. This also increases chances charts run on environments with little
@@ -175,10 +181,10 @@ consumers:
     # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
     # limits:
     #   cpu: 100m
-    #   memory: 128Mi
+    #   memory: 400Mi
     # requests:
     #   cpu: 100m
-    #   memory: 128Mi
+    #   memory: 250Mi
 
   nodeSelector: {}
 
