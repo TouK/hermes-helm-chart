@@ -15,6 +15,9 @@ spec:
         checksum/config: {{ include (print $.Template.BasePath "/frontend-configmap.yaml") . | sha256sum }}
       labels:
         {{- include "hermes.frontend.selectorLabels" . | nindent 8 }}
+        {{- with .Values.frontend.extraPodLabels -}}
+        {{- . | toYaml | nindent 8 -}}
+        {{- end }}
     spec:
     {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
