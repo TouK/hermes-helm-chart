@@ -36,7 +36,12 @@ spec:
             - name: SERVER_USE_FORWARD_HEADERS
               value: "true"
             - name: SPRING_CONFIG_LOCATION
-              value: "file:///etc/hermes/management.yaml,file:///etc/hermes/management-secret.yaml"  
+              value: "file:///etc/hermes/management.yaml,file:///etc/hermes/management-secret.yaml"
+            - name: JAVA_OPTS
+              value: {{ .Values.management.javaOpts }}
+            {{- with .Values.management.extraEnv -}}
+              {{- . | toYaml | nindent 12 -}}
+            {{- end }}
           envFrom:
             - configMapRef:
                 optional: true
