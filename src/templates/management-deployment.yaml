@@ -15,6 +15,9 @@ spec:
         checksum/config: {{ include (print $.Template.BasePath "/management-configmap.yaml") . | sha256sum }}
       labels:
         {{- include "hermes.management.selectorLabels" . | nindent 8 }}
+        {{- with .Values.management.extraPodLabels -}}
+        {{- . | toYaml | nindent 8 -}}
+        {{- end }}
     spec:
     {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
@@ -50,6 +53,9 @@ spec:
             - name: http
               containerPort: 8080
               protocol: TCP
+          {{- with .Values.management.extraPorts -}}
+            {{- . | toYaml | nindent 12 -}}
+          {{- end }}
 {{/*      we are using tcp probes to handle both secured and public apis    */}}
           livenessProbe:
             tcpSocket:

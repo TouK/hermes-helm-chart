@@ -15,6 +15,9 @@ spec:
         checksum/config: {{ include (print $.Template.BasePath "/consumers-configmap.yaml") . | sha256sum }}
       labels:
         {{- include "hermes.consumers.selectorLabels" . | nindent 8 }}
+        {{- with .Values.consumers.extraPodLabels -}}
+        {{- . | toYaml | nindent 8 -}}
+        {{- end }}
     spec:
     {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
@@ -48,6 +51,9 @@ spec:
             - name: http
               containerPort: 8000
               protocol: TCP
+          {{- with .Values.consumers.extraPorts -}}
+            {{- . | toYaml | nindent 12 -}}
+          {{- end }}
           livenessProbe:
             httpGet:
               path: /status/health
