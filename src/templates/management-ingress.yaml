@@ -19,12 +19,14 @@ metadata:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
+  {{- if not .Values.management.ingress.skipHost }}
   tls:
-    - secretName: {{ $tlsSecretName }}
-      {{- if not .Values.management.ingress.skipHost }}
-      hosts:
+    - hosts:
         - {{ include "hermes.management.fqdn" . | quote }}
-      {{- end }}
+      {{- if not .Values.management.ingress.skipTlsSecret }}
+      secretName: {{ $tlsSecretName }}
+      {{- end }}  
+  {{- end }}   
   rules:
     - http:
         paths:
