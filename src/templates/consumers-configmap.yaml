@@ -26,7 +26,10 @@ data:
     consumer.workload.consumers.per.subscription=1
 {{ range $key, $value := .Values.consumers.additionalConfig }}
   {{ $key | indent 2}}={{ $value }}
-{{- end }}    
+{{- end }}
+  {{- if .Values.consumers.logbackConfig }}
+  logback.xml: {{ toYaml .Values.consumers.logbackConfig | indent 2 }}
+  {{- else }}
   logback.xml: |-
     <?xml version="1.0" encoding="UTF-8"?>
     <configuration scan="true" scanPeriod="5 seconds">
@@ -45,6 +48,5 @@ data:
         </root>
 
     </configuration>
-
-
+  {{- end }}
   

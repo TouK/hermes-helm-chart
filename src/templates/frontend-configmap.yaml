@@ -28,6 +28,9 @@ data:
 {{ range $key, $value := .Values.frontend.additionalConfig }}
   {{ $key | indent 2}}={{ $value }}
 {{- end }}
+  {{- if .Values.frontend.logbackConfig }}
+  logback.xml: {{ toYaml .Values.frontend.logbackConfig | indent 2 }}
+  {{- else }}
   logback.xml: |-
     <?xml version="1.0" encoding="UTF-8"?>
     <configuration scan="true" scanPeriod="5 seconds">
@@ -50,5 +53,4 @@ data:
         </root>
 
     </configuration>
-
-  
+  {{- end }}
