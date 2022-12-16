@@ -86,12 +86,15 @@ incompatible breaking change needing manual actions.
 | `consumers.additionalConfig`       | Additional config values (mounted as additional properties file)                                                                   | `{}`
 | `consumers.secretConfig`           | Additional config values (mounted as a secret with properties file)                                                                | `{}`
 | `consumers.additionalSecretFiles`  | Additional data mounted as separated files (with key as file name, and value as content, mind that value has to be base64 encoded) | `{}`
+| `consumers.logbackConfig`          | Custom logback.xml logging configuration                                                                                                       |
 | `frontend.additionalConfig`        | Additional config values (mounted as additional properties file)                                                                   | `{}`
 | `frontend.secretConfig`            | Additional config values (mounted as a secret with properties file)                                                                | `{}`
 | `frontend.additionalSecretFiles`   | Additional data mounted as separated files (with key as file name, and value as content, mind that value has to be base64 encoded) | `{}`
+| `frontend.logbackConfig`           | Custom logback.xml logging configuration                                                                                                       |
 | `management.additionalConfig`      | Additional config values (mounted as additional yaml config file)                                                                  | `{}`
 | `management.secretConfig`          | Additional config values (mounted as additional yaml config file)                                                                  | `{}`
 | `management.additionalSecretFiles` | Additional data mounted as separated files (with key as file name, and value as content, mind that value has to be base64 encoded) | `{}`
+| `management.logbackConfig`         | Custom logback.xml logging configuration                                                                                   |
 
 
 ## TODO
