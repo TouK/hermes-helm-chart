@@ -173,7 +173,7 @@ Define kafka URL based on user provided values
 */}}
 {{- define "hermes.kafkaBootstrapServers" -}}
 {{- if .Values.kafka.enabled }}
-{{- include "kafka.fullname" .Subcharts.kafka }}:{{- .Values.kafka.service.port }}
+{{- include "common.names.fullname" .Subcharts.kafka }}:{{- .Values.kafka.service.ports.client }}
 {{- else -}}
 {{- required "Enable Kafka or provide global values for bootstrap servers." (include "hermes.globalKafkaBootstrapServers" . | trim) }}
 {{- end }}
@@ -206,7 +206,7 @@ Define zookeper URL based on user provided values
 */}}
 {{- define "hermes.zookeeperConnectString" -}}
 {{- if and .Values.kafka.enabled (index (.Values.kafka.zookeeper | default dict) "enabled") }}
-{{- include "kafka.zookeeper.fullname" .Subcharts.kafka }}:{{- .Values.kafka.zookeeper.service.port }}
+{{- include "kafka.zookeeper.fullname" .Subcharts.kafka }}:{{- .Values.kafka.zookeeper.service.ports.client }}
 {{- else -}}
 {{- required "Enable Zookeeper in the Kafka subchart or provide global values for a connection string." (include "hermes.globalZookeeperConnectString" . | trim) }}
 {{- end }}

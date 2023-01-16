@@ -5,29 +5,33 @@ metadata:
   labels:
     {{- include "hermes.frontend.labels" . | nindent 4 }}
 data:
-  frontend.properties: |-
-    zookeeper.connect.string={{ include "hermes.zookeeperConnectString" . }}
-    zookeeper.root={{ include "hermes.zookeeperRoot" . }}
-
-    kafka.broker.list={{ include "hermes.kafkaBootstrapServers" . }}
-    kafka.zookeeper.connect.string={{ include "hermes.zookeeperConnectString" . }}
+  frontend.yaml: |-
+    frontend:
+      zookeeper:
+        clusters:
+          - datacenter: "dc"
+            root: {{ include "hermes.zookeeperRoot" . | quote }}
+            connectionString: {{ include "hermes.zookeeperConnectString" . | quote }}
+      kafka:
+        clusters:
+          - datacenter: "dc"
+            brokerList: {{ include "hermes.kafkaBootstrapServers" . | quote }}
     {{- if .Values.kafkaNamespace }}
-    kafka.namespace={{ tpl .Values.kafkaNamespace . }}
+        namespace: {{ tpl .Values.kafkaNamespace . }}
     {{- end }}
-
-    kafka.topic.partitions=4
-    kafka.topic.replication.factor=1
-
-    schema.repository.serverUrl={{ include "hermes.schemaRegistryUrl" . }}
-    schema.repository.subject.suffix.enabled=true
-    schema.repository.subject.namespace.enabled=true
-
-    metrics.graphite.reporter=false
-    frontend.message.preview.enabled={{ .Values.frontend.preview.enabled }}
-
-{{ range $key, $value := .Values.frontend.additionalConfig }}
-  {{ $key | indent 2}}={{ $value }}
-{{- end }}
+      metrics:
+        graphiteReporterEnabled: false
+      schema:
+        repository:
+          serverUrl: {{ include "hermes.schemaRegistryUrl" . | quote }}
+          subjectSuffixEnabled: true
+          subjectNamespaceEnabled: true
+      message:
+        preview:
+          enabled: {{ .Values.frontend.preview.enabled }}
+    {{- with .Values.frontend.additionalConfig }}
+    {{ tpl (toYaml . | nindent 4) $ }}
+    {{- end }}
   {{- if .Values.frontend.logbackConfig }}
   logback.xml: {{ toYaml .Values.frontend.logbackConfig | indent 2 }}
   {{- else }}

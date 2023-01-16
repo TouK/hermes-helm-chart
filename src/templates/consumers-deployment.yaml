@@ -37,7 +37,7 @@ spec:
               mountPath: /etc/hermes
           env:
             - name: HERMES_CONSUMERS_OPTS
-              value: -Darchaius.configurationSource.additionalUrls=file:///etc/hermes/consumers.properties,file:///etc/hermes/consumers-secret.properties -Dlogging.config=file:/etc/hermes/logback.xml
+              value: -Dspring.config.location=file:///etc/hermes/consumers.yaml,file:///etc/hermes/consumers-secret.yaml -Dlogging.config=/etc/hermes/logback.xml
             - name: JAVA_OPTS
               value: {{ .Values.consumers.javaOpts }}
           {{- with .Values.consumers.extraEnv -}}
