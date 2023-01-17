@@ -41,7 +41,7 @@ spec:
                 name: {{ default (printf "%s-env" (include "hermes.frontend.fullname" . )) .Values.envConfigMapOverride }}
           env:
             - name: HERMES_FRONTEND_OPTS
-              value: -Darchaius.configurationSource.additionalUrls=file:///etc/hermes/frontend.properties,file:///etc/hermes/frontend-secret.properties -Dlogging.config=file:/etc/hermes/logback.xml
+              value: -Dspring.config.location=file:///etc/hermes/frontend.yaml,file:///etc/hermes/frontend-secret.yaml -Dlogging.config=/etc/hermes/logback.xml
             - name: JAVA_OPTS
               value: {{ .Values.frontend.javaOpts }}
             {{- with .Values.frontend.extraEnv -}}

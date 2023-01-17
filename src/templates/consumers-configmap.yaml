@@ -5,28 +5,34 @@ metadata:
   labels:
     {{- include "hermes.consumers.labels" . | nindent 4 }}
 data:
-  consumers.properties: |-
-    zookeeper.connect.string={{ include "hermes.zookeeperConnectString" . }}
-    zookeeper.root={{ include "hermes.zookeeperRoot" . }}
-    zookeeper.connection.timeout=5000
-    zookeeper.session.timeout=7000
-
-    kafka.broker.list={{ include "hermes.kafkaBootstrapServers" . }}
-    kafka.zookeeper.connect.string={{ include "hermes.zookeeperConnectString" . }}
+  consumers.yaml: |-
+    consumer:
+      zookeeper:
+        clusters:
+          - datacenter: "dc"
+            root: {{ include "hermes.zookeeperRoot" . | quote }}
+            connectionString: {{ include "hermes.zookeeperConnectString" . | quote }}
+            connectionTimeout: 5000
+            sessionTimeout: 7000
+      kafka:
+        clusters:
+          - datacenter: "dc"
+            brokerList: {{ include "hermes.kafkaBootstrapServers" . | quote }}
     {{- if .Values.kafkaNamespace }}
-    kafka.namespace={{ tpl .Values.kafkaNamespace . }}
+        namespace: {{ tpl .Values.kafkaNamespace . }}
     {{- end }}
-
-    schema.repository.serverUrl={{ include "hermes.schemaRegistryUrl" . }}
-    schema.repository.subject.suffix.enabled=true
-    schema.repository.subject.namespace.enabled=true
-
-    metrics.graphite.reporter=false
-
-    consumer.workload.consumers.per.subscription=1
-{{ range $key, $value := .Values.consumers.additionalConfig }}
-  {{ $key | indent 2}}={{ $value }}
-{{- end }}
+      schema:
+        repository:
+          serverUrl: {{ include "hermes.schemaRegistryUrl" . | quote }}
+          subjectSuffixEnabled: true
+          subjectNamespaceEnabled: true
+      metrics:
+        graphiteReporterEnabled: false
+      workload:
+        consumersPerSubscription:1
+    {{- with .Values.consumers.additionalConfig }}
+    {{ tpl (toYaml . | nindent 4) $ }}
+    {{- end }}
   {{- if .Values.consumers.logbackConfig }}
   logback.xml: {{ toYaml .Values.consumers.logbackConfig | indent 2 }}
   {{- else }}

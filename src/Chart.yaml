@@ -8,8 +8,8 @@ keywords:
   - hermes
   - allegro
 type: application
-version: 0.5.14-SNAPSHOT
-appVersion: 1.12.3
+version: 0.6.0-SNAPSHOT
+appVersion: 2.2.8
 sources:
   - https://github.com/allegro/hermes
 maintainers:
@@ -19,7 +19,7 @@ maintainers:
 
 dependencies:
   - name: kafka
-    version: 14.9.0
+    version: 20.0.4
     repository: https://charts.bitnami.com/bitnami
     condition: kafka.enabled
   - name: apicurio-registry
